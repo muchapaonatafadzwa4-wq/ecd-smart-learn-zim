@@ -1,0 +1,16 @@
+{
+  "name": "ECD Smart-Learn Zim",
+  "short_name": "Smart-Learn Zim",
+  "description": "Learning, Culture and Fun in One App.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF9EC",
+  "theme_color": "#F2A93B",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
