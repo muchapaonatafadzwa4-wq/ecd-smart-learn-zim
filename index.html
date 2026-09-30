@@ -126,4 +126,133 @@
   .area-card .label{ font-family:'Baloo 2'; font-weight:700; font-size:15px; line-height:1.15; }
 
   .card-english{ background: linear-gradient(155deg,var(--english),#F7A93C); color:#3A2A00; }
-  .card-maths{ background: linear-gradient(155deg,var(--maths),#2E86AB); }
+  .card-maths{ background: linear-gradient(155deg,var(--maths),#2E86AB); }.card-social{ background: linear-gradient(155deg,var(--social),#D14F3E); }
+  .card-pea{ background: linear-gradient(155deg,var(--pea),#B23A73); }
+  .card-lang{ background: linear-gradient(155deg,var(--lang),#5C4189); }
+
+  .wide-row{ display:flex; flex-direction:column; gap:12px; margin-top:6px; }
+  .wide-btn{
+    border:none; border-radius:22px; padding: 16px 18px;
+    display:flex; align-items:center; gap:14px;
+    color:#fff; font-family:'Baloo 2'; font-weight:700; font-size:16px;
+    cursor:pointer; box-shadow: var(--card-shadow);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .wide-btn:active{ transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.12); }
+  .wide-btn .emoji{ font-size:26px; }
+  .btn-games{ background: linear-gradient(100deg,var(--games),#E8502E); }
+  .btn-rhythms{ background: linear-gradient(100deg,var(--rhythms),#1D9E93); }
+  .btn-quiz{ background: linear-gradient(100deg,var(--quiz),#D98A1E); }
+
+  /* ---------- TOAST ---------- */
+  #toast{
+    position:fixed; left:50%; bottom: calc(28px + env(safe-area-inset-bottom,0px));
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--cream);
+    padding: 12px 20px; border-radius:16px; font-weight:700; font-size:14px;
+    opacity:0; transition: opacity .25s ease, transform .25s ease;
+    pointer-events:none; max-width: 86%; text-align:center;
+    z-index: 20;
+  }
+  #toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- LESSON SCREENS ---------- */
+  .lesson-screen{ display:none; min-height:100%; padding: 16px 16px 40px; }
+  .lesson-screen.show{ display:block; }
+  .lesson-topbar{ display:flex; align-items:center; gap:12px; padding: 6px 4px 6px; }
+  .back-btn{
+    width:42px; height:42px; border-radius:14px; border:none;
+    background: rgba(45,42,50,0.08); color:var(--ink);
+    font-size:20px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .back-btn:active{ transform: scale(0.92); }
+  .lesson-title{ font-family:'Baloo 2'; font-weight:800; font-size:19px; }
+  .lesson-title small{ display:block; font-family:'Nunito'; font-weight:700; font-size:11.5px; color:var(--ink-soft); }
+
+  .lesson-card{
+    background: #fff2cf; border-radius:26px; padding: 26px 20px;
+    text-align:center; margin: 16px 0; box-shadow: var(--card-shadow);
+  }
+  :root[data-theme="dark"] .lesson-card,
+  :root:not([data-theme="light"]) .lesson-card{ background:#3A3348; }
+  @media (prefers-color-scheme: light){ .lesson-card{ background:#fff2cf; } }
+
+  .big-letter{ font-family:'Baloo 2'; font-weight:800; font-size:64px; color:var(--social); line-height:1; }
+  .big-emoji{ font-size:70px; margin: 10px 0; }
+  .lesson-sentence{ font-family:'Baloo 2'; font-weight:700; font-size:20px; margin-top:6px; }
+  .speak-btn{
+    margin-top:16px; border:none; border-radius:16px; padding:10px 20px;
+    background: var(--english); color:#3A2A00; font-family:'Baloo 2'; font-weight:700; font-size:15px;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; box-shadow: var(--card-shadow);
+  }
+  .speak-btn:active{ transform: translateY(4px); box-shadow:none; }
+
+  .activity-label{ font-size:14px; font-weight:800; color:var(--ink-soft); margin: 22px 4px 12px; text-align:center; }
+  .option-row{ display:flex; gap:12px; justify-content:center; }
+  .option-btn{
+    width:84px; height:84px; border-radius:20px; border: 3px solid transparent;
+    background:#fff; font-size:38px; cursor:pointer; box-shadow: var(--card-shadow);
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .12s ease, border-color .12s ease;
+  }
+  :root[data-theme="dark"] .option-btn,
+  :root:not([data-theme="light"]) .option-btn{ background:#3A3348; }
+  @media (prefers-color-scheme: light){ .option-btn{ background:#fff; } }
+  .option-btn:active{ transform: scale(0.94); }
+  .option-btn.correct{ border-color:var(--science); background: rgba(76,175,125,0.18); }
+  .option-btn.wrong{ border-color:var(--social); background: rgba(232,115,74,0.18); }
+
+  .complete-banner{
+    margin-top:22px; text-align:center; font-family:'Baloo 2'; font-weight:800;
+    color:var(--science); font-size:17px; display:none;
+  }
+  .complete-banner.show{ display:block; }
+
+  /* ---------- LANGUAGE SELECTOR ---------- */
+  .lang-list{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+  .lang-chip{
+    display:flex; align-items:center; gap:14px;
+    border:none; border-radius:18px; padding: 14px 16px;
+    background:#fff; box-shadow: var(--card-shadow); cursor:pointer; text-align:left;
+  }
+  :root[data-theme="dark"] .lang-chip,
+  :root:not([data-theme="light"]) .lang-chip{ background:#3A3348; }
+  @media (prefers-color-scheme: light){ .lang-chip{ background:#fff; } }
+  .lang-chip:active{ transform: translateY(3px); box-shadow:none; }
+  .lang-dot{
+    width:14px; height:14px; border-radius:50%; flex-shrink:0;
+  }
+  .lang-dot.active{ background: var(--science); }
+  .lang-dot.planned{ background: var(--ink-soft); opacity:0.5; }
+  .lang-info{ flex:1; }
+  .lang-name{ font-family:'Baloo 2'; font-weight:700; font-size:15.5px; }
+  .lang-status{ font-size:11.5px; font-weight:700; color: var(--ink-soft); margin-top:1px; }
+  .lang-status.active{ color: var(--science); }
+
+  .jump-btn{
+    width:140px; height:140px; border-radius:50%; border:none;
+    background: linear-gradient(155deg,var(--pea),#B23A73);
+    font-size:56px; color:#fff; cursor:pointer; margin: 8px auto 6px;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: var(--card-shadow);
+  }
+  .jump-btn:active{ transform: translateY(4px) scale(0.97); box-shadow:none; }
+  .jump-count{ font-family:'Baloo 2'; font-weight:800; font-size:18px; margin-top:10px; color:var(--ink-soft); }
+
+  .speak-btn.pending{
+    background: rgba(45,42,50,0.10); color: var(--ink-soft); cursor:default;
+  }
+  .speak-btn.pending:active{ transform:none; }
+  .word-native{ font-family:'Baloo 2'; font-weight:800; font-size:34px; color:var(--lang); }
+
+  .quiz-progress{ font-size:13px; font-weight:800; color:var(--ink-soft); text-align:center; margin: 4px 0 14px; }
+  .quiz-emoji{ font-size:48px; text-align:center; margin-bottom:6px; }
+  .quiz-question{ font-family:'Baloo 2'; font-weight:800; font-size:19px; text-align:center; margin: 6px 0 20px; }
+  .quiz-opt-list{ display:flex; flex-direction:column; gap:10px; }
+  .quiz-opt{
+    border:3px solid transparent; border-radius:16px; padding:14px 16px;
+    background:#fff; font-family:'Baloo 2'; font-weight:700; font-size:16px;
+    text-align:left; cursor:pointer; box-shadow: var(--card-shadow);
+  }
+  :root[data-theme="dark"] .quiz-opt,
+  :root:not([data-theme="light"]) .quiz-opt{ background:#3A3348; }
