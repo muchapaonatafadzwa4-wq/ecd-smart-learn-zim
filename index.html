@@ -384,4 +384,133 @@
     <div class="topbar">
       <div class="brand">
         <div class="mini-badge">🎓</div>
-        <div class="brand-title">ECD Smart-Learn Zim<small>Learning, Culture and Fun in One App.</small></div>
+        <div class="brand-title">ECD Smart-Learn Zim<small>Learning, Culture and Fun in One App.</small></div></div>
+      <div style="display:flex;gap:8px;">
+        <button class="icon-btn" aria-label="My progress" style="background:rgba(242,169,59,0.22);" onclick="openLesson('progress-screen'); renderProgress();">🏅</button>
+        <button class="icon-btn" aria-label="Settings and Teacher area" onclick="openLesson('teacher-screen'); initTeacher();">⚙️</button>
+      </div>
+    </div>
+
+    <button class="who-chip" onclick="openLesson('learner-screen'); renderLearners();">
+      <span>👤</span><span id="who-name">Learner 1</span><span style="opacity:.6;">▾ change</span>
+    </button>
+
+    <div class="section-label" id="areas-label">Learning areas</div>
+    <div class="grid">
+      <button class="area-card card-english" onclick="openSubject('english')">
+        <span class="emoji">🔤</span><span class="label">English Language</span>
+      </button>
+      <button class="area-card card-maths" onclick="openSubject('maths')">
+        <span class="emoji">🔢</span><span class="label">Mathematics</span>
+      </button>
+      <button class="area-card card-science" onclick="openSubject('science')">
+        <span class="emoji">🌱</span><span class="label">Science &amp; Technology</span>
+      </button>
+      <button class="area-card card-social" onclick="openSubject('social')">
+        <span class="emoji">🏘️</span><span class="label">Social Science</span>
+      </button>
+      <button class="area-card card-pea" onclick="openSubject('pea')">
+        <span class="emoji">🤸</span><span class="label">P.E.A</span>
+      </button>
+      <button class="area-card card-lang" onclick="openLesson('lang-select')">
+        <span class="emoji">🗣️</span><span class="label">Indigenous Languages</span>
+      </button>
+    </div>
+
+    <div class="section-label" id="play-label">Play &amp; explore</div>
+    <div class="wide-row">
+      <button class="wide-btn btn-games" onclick="openLesson('games-hub')"><span class="emoji">🎮</span>Games</button>
+      <button class="wide-btn btn-rhythms" onclick="openLesson('rhythms-screen'); resetClap();"><span class="emoji">🎵</span>Rhythms &amp; Songs</button>
+      <button class="wide-btn btn-quiz" onclick="openLesson('quiz-screen'); startQuiz();"><span class="emoji">❓</span>Quiz</button>
+    </div>
+  </div>
+
+  <div id="lesson-pea" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="openSubject('pea')">←</button>
+      <div class="lesson-title">Let's Jump!<small>P.E.A · Lesson 1</small></div>
+    </div>
+
+    <div class="lesson-card">
+      <div class="lesson-sentence" style="margin-bottom:4px;">Stand up and jump with me!</div>
+      <button class="speak-btn" onclick="speak('Jump! Jump! Jump up high! One, two, three!')">🔊 Play sound</button>
+    </div>
+
+    <div class="activity-label">Activity: tap to jump 3 times</div>
+    <button class="jump-btn" id="jump-btn" onclick="doJump()">🤸</button>
+    <div class="jump-count" id="jump-count">Jumps: 0 / 3</div>
+
+    <div class="complete-banner" id="pea-complete">⭐ Well done! You jumped 3 times!</div>
+  </div>
+
+  <div id="hub-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" id="hub-back" aria-label="Back">←</button>
+      <div class="lesson-title"><span id="hub-title"></span><small id="hub-sub"></small></div>
+    </div>
+    <div class="lang-list" id="hub-list"></div>
+    <button class="t-btn" id="hub-quiz" style="display:none;"></button>
+    <div class="source-note" id="hub-note"></div>
+  </div>
+
+  <div id="player-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to lessons" onclick="exitLesson()">←</button>
+      <div class="lesson-title"><span id="player-title"></span><small id="player-sub"></small></div>
+    </div>
+
+    <div id="player-learn">
+      <div class="quiz-progress" id="player-progress"></div>
+      <div class="lesson-card">
+        <div class="big-emoji" id="pl-emoji"></div>
+        <div class="word-native" id="pl-big"></div>
+        <div class="lesson-sentence" id="pl-text"></div>
+        <button class="speak-btn" id="pl-speak">🔊 Play sound</button>
+      </div>
+      <button class="quiz-next-btn show" id="pl-next" onclick="nextCard()">Next →</button>
+    </div>
+
+    <div id="player-quiz" style="display:none;">
+      <div class="quiz-progress" id="pq-progress"></div>
+      <div class="quiz-emoji" id="pq-emoji"></div>
+      <div class="quiz-question" id="pq-question"></div>
+      <div class="quiz-opt-list" id="pq-opts"></div>
+      <button class="quiz-next-btn" id="pq-next" onclick="nextPQ()">Next →</button>
+    </div>
+
+    <div id="player-result" class="quiz-result" style="display:none;">
+      <div class="score-emoji" id="pr-emoji">⭐</div>
+      <div class="score-text" id="pr-text">Well done!</div>
+      <div class="score-sub">Lesson complete. Progress saved.</div>
+      <button class="quiz-next-btn show" onclick="exitLesson()">Back to lessons</button>
+      <button class="t-btn soft" onclick="replayLesson()">Do this lesson again</button>
+    </div>
+  </div>
+
+  <div id="quiz-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Quiz Time!<small id="quiz-sub">Mixed review · all subjects</small></div>
+    </div>
+
+    <div id="quiz-play">
+      <div class="quiz-progress" id="quiz-progress">Question 1 of 3</div>
+      <div class="quiz-emoji" id="quiz-emoji"></div>
+      <div class="quiz-question" id="quiz-question"></div>
+      <div class="quiz-opt-list" id="quiz-opt-list"></div>
+      <button class="quiz-next-btn" id="quiz-next-btn" onclick="nextQuestion()">Next →</button>
+    </div>
+
+    <div class="quiz-result" id="quiz-result">
+      <div class="score-emoji" id="score-emoji">⭐</div>
+      <div class="score-text" id="score-text">You scored 0 / 3</div>
+      <div class="score-sub">Great effort! Keep learning.</div>
+      <button class="quiz-next-btn show" onclick="startQuiz(quizState.subject)">Play Again</button>
+    </div>
+  </div>
+
+  <div id="games-hub" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Games</div>
+    </div>
