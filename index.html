@@ -255,4 +255,133 @@
     text-align:left; cursor:pointer; box-shadow: var(--card-shadow);
   }
   :root[data-theme="dark"] .quiz-opt,
-  :root:not([data-theme="light"]) .quiz-opt{ background:#3A3348; }
+  :root:not([data-theme="light"]) .quiz-opt{ background:#3A3348; }@media (prefers-color-scheme: light){ .quiz-opt{ background:#fff; } }
+  .quiz-opt:active{ transform: translateY(3px); box-shadow:none; }
+  .quiz-opt.correct{ border-color:var(--science); background: rgba(76,175,125,0.18); }
+  .quiz-opt.wrong{ border-color:var(--social); background: rgba(232,115,74,0.18); }
+  .quiz-next-btn{
+    display:none; width:100%; margin-top:18px; border:none; border-radius:16px; padding:14px;
+    background: var(--quiz); color:#3A2A00; font-family:'Baloo 2'; font-weight:800; font-size:16px;
+    cursor:pointer; box-shadow: var(--card-shadow);
+  }
+  .quiz-next-btn.show{ display:block; }
+  .quiz-next-btn:active{ transform: translateY(4px); box-shadow:none; }
+  .quiz-result{ text-align:center; padding-top: 30px; display:none; }
+  .quiz-result.show{ display:block; }
+  .quiz-result .score-emoji{ font-size:60px; }
+  .quiz-result .score-text{ font-family:'Baloo 2'; font-weight:800; font-size:22px; margin:14px 0 6px; }
+  .quiz-result .score-sub{ color:var(--ink-soft); font-weight:700; font-size:14px; margin-bottom:22px; }
+
+  .memory-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top:10px;
+  }
+  .memory-card{
+    aspect-ratio: 1 / 1; border-radius:16px; border:none;
+    background: linear-gradient(155deg,var(--lang),#5C4189);
+    font-size:32px; color:#fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow: var(--card-shadow);
+  }
+  .memory-card:active{ transform: translateY(3px); box-shadow:none; }
+  .memory-card.flipped{ background:#fff; color:var(--ink); }
+  :root[data-theme="dark"] .memory-card.flipped,
+  :root:not([data-theme="light"]) .memory-card.flipped{ background:#3A3348; color:var(--ink); }
+  @media (prefers-color-scheme: light){ .memory-card.flipped{ background:#fff; } }
+  .memory-card.matched{ background: rgba(76,175,125,0.25); color:var(--science); cursor:default; }
+  .memory-progress{ font-size:13px; font-weight:800; color:var(--ink-soft); text-align:center; margin: 4px 0 12px; }
+
+  .count-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:14px; }
+  .count-btn{
+    aspect-ratio:1/1; border-radius:18px; border:3px solid transparent;
+    background: linear-gradient(155deg,var(--maths),#2E86AB); color:#fff;
+    font-family:'Baloo 2'; font-weight:800; font-size:30px; cursor:pointer;
+    box-shadow: var(--card-shadow);
+  }
+  .count-btn:active{ transform: translateY(3px); box-shadow:none; }
+  .count-btn.done{ background: rgba(76,175,125,0.25); color:var(--science); border-color:var(--science); cursor:default; }
+  .count-btn.wrong{ border-color:var(--social); }
+
+  .rhythm-pattern{ font-size:34px; text-align:center; letter-spacing:10px; margin: 12px 0; }
+  .rhythm-pattern span.pause{ opacity:0.25; }
+  .clap-btn{
+    display:block; margin: 14px auto 0; border:none; border-radius:20px;
+    width:120px; height:120px; border-radius:50%;
+    background: linear-gradient(155deg,var(--rhythms),#1D9E93); color:#fff;
+    font-size:44px; cursor:pointer; box-shadow: var(--card-shadow);
+  }
+  .clap-btn:active{ transform: translateY(4px) scale(0.97); box-shadow:none; }
+  .rhyme-lines{ font-family:'Baloo 2'; font-weight:700; font-size:17px; line-height:1.7; text-align:center; margin: 10px 0 4px; }
+  .rhyme-icons{ font-size:26px; text-align:center; letter-spacing:14px; margin-top:10px; }
+  .source-note{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:10px; font-weight:700; }
+
+  .prog-bar{ height:16px; border-radius:99px; background: rgba(45,42,50,0.12); overflow:hidden; margin-top:12px; }
+  .prog-fill{ height:100%; width:0%; border-radius:99px; background: linear-gradient(90deg,var(--quiz),var(--social)); transition: width .4s ease; }
+  .prog-big{ font-family:'Baloo 2'; font-weight:800; font-size:26px; text-align:center; }
+  .badge-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  .badge{ border-radius:18px; padding:14px 10px; text-align:center; background:#fff; box-shadow: var(--card-shadow); }
+  :root[data-theme="dark"] .badge,
+  :root:not([data-theme="light"]) .badge{ background:#3A3348; }
+  @media (prefers-color-scheme: light){ .badge{ background:#fff; } }
+  .badge .b-emoji{ font-size:34px; }
+  .badge .b-name{ font-family:'Baloo 2'; font-weight:700; font-size:14px; margin-top:2px; }
+  .badge .b-desc{ font-size:11px; font-weight:700; color:var(--ink-soft); margin-top:2px; }
+  .badge.locked{ opacity:0.45; filter:grayscale(1); }
+  .check-row{ display:flex; align-items:center; gap:10px; padding:9px 4px; font-weight:700; font-size:14px; border-bottom:1px solid rgba(128,128,128,0.18); }
+  .check-row .tick{ width:24px; text-align:center; }
+  .toggle-row{
+    display:flex; align-items:center; gap:12px; width:100%; text-align:left;
+    background:none; border:none; border-bottom:1px solid rgba(128,128,128,0.18);
+    padding:12px 4px; cursor:pointer; color:var(--ink);
+    font-family:'Nunito'; font-weight:800; font-size:14.5px;
+  }
+  .toggle-row .tstate{ margin-left:auto; font-size:12px; color:var(--ink-soft); }
+  .toggle-row.off{ opacity:0.55; }
+  .who-chip{
+    display:inline-flex; align-items:center; gap:8px; border:none; border-radius:99px;
+    padding:8px 14px; margin: 2px 4px 0; cursor:pointer;
+    background: rgba(123,94,167,0.16); color:var(--lang);
+    font-family:'Baloo 2'; font-weight:700; font-size:14px;
+  }
+  .who-chip:active{ transform: scale(0.97); }
+  .t-label{ display:block; font-size:13px; font-weight:800; color:var(--ink-soft); margin: 14px 4px 6px; }
+  .t-input{
+    width:100%; padding:14px; border-radius:14px; border:2px solid rgba(128,128,128,0.35);
+    background: rgba(128,128,128,0.08); color:var(--ink);
+    font-family:'Nunito'; font-weight:700; font-size:16px;
+  }
+  .t-input:focus{ outline:none; border-color: var(--lang); }
+  .t-error{ color:var(--social); font-weight:800; font-size:13px; min-height:18px; margin:8px 4px 0; }
+  .t-btn{
+    display:block; width:100%; margin-top:14px; border:none; border-radius:16px; padding:14px;
+    background: var(--lang); color:#fff; font-family:'Baloo 2'; font-weight:800; font-size:16px;
+    cursor:pointer; box-shadow: var(--card-shadow);
+  }
+  .t-btn:active{ transform: translateY(4px); box-shadow:none; }
+  .t-btn.soft{ background: rgba(123,94,167,0.16); color: var(--lang); box-shadow:none; }
+  .t-link{ background:none; border:none; color:var(--ink-soft); font-weight:800; font-size:13px; margin-top:14px; width:100%; cursor:pointer; text-decoration:underline; }
+  .t-stats{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-top:12px; }
+  .t-stat{ text-align:center; padding:10px 4px; border-radius:14px; background: rgba(128,128,128,0.10); }
+  .t-stat b{ display:block; font-family:'Baloo 2'; font-size:20px; }
+  .t-stat span{ font-size:11px; font-weight:800; color:var(--ink-soft); }
+  details.res{ border-radius:16px; background:#fff; box-shadow: var(--card-shadow); padding:12px 14px; margin-bottom:10px; }
+  :root[data-theme="dark"] details.res,
+  :root:not([data-theme="light"]) details.res{ background:#3A3348; }
+  @media (prefers-color-scheme: light){ details.res{ background:#fff; } }
+  details.res summary{ font-family:'Baloo 2'; font-weight:700; font-size:15px; cursor:pointer; }
+  details.res p{ margin:8px 0 2px; font-size:14px; line-height:1.5; font-weight:600; }
+  .reset-btn{ margin-top:22px; width:100%; border:none; border-radius:14px; padding:12px; background: rgba(232,115,74,0.15); color: var(--social); font-family:'Baloo 2'; font-weight:700; font-size:14px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+  <div id="splash" onclick="goHome()">
+    <div class="logo-badge">🎓</div>
+    <h1>ECD Smart-Learn Zim</h1>
+    <div class="tagline">Learning, Culture and Fun in One App.</div>
+    <div class="tap-hint">Tap anywhere to continue</div>
+  </div>
+
+  <div id="home">
+    <div class="topbar">
+      <div class="brand">
+        <div class="mini-badge">🎓</div>
+        <div class="brand-title">ECD Smart-Learn Zim<small>Learning, Culture and Fun in One App.</small></div>
