@@ -14,7 +14,136 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FFF9EC;
+<button class="t-btn soft" onclick="openTeacherSetup(true)">Edit profile &amp; PIN</button>
+      <button class="t-btn" onclick="lockTeacher()">🔒 Lock teacher area</button>
+    </div>
+  </div>
+
+  <div id="learner-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Who is learning?<small>Each learner keeps their own progress</small></div>
+    </div>
+    <div class="lang-list" id="learner-list"></div>
+    <label class="t-label" for="learner-new">Add a new learner</label>
+    <input id="learner-new" class="t-input" type="text" maxlength="20" placeholder="First name" autocomplete="off">
+    <div class="t-error" id="learner-error"></div>
+    <button class="t-btn" onclick="addLearner()">Add learner</button>
+  </div>
+
+  <div id="lang-select" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Select Language<small>Indigenous Languages</small></div>
+    </div>
+    <div class="lang-list" id="lang-list"></div>
+  </div>
+
+  <div id="toast"></div>
+
+<script>
+  function goHome(){
+    var s = document.getElementById('splash');
+    s.classList.add('hide');
+    setTimeout(function(){
+      s.style.display = 'none';
+      document.getElementById('home').classList.add('show');
+    }, 550);
+  }
+  // auto-advance after 2.2s even without a tap
+  setTimeout(goHome, 2200);
+
+  var toastTimer;
+  function notReady(name){
+    var t = document.getElementById('toast');
+    t.textContent = name + ' — coming in a later phase!';
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1600);
+  }
+
+  // ---- Language pack registry ----
+  // Adding a new officially-recognised language later = adding one line here.
+  // No other app code needs to change.
+  var LANGUAGES = [
+    { name:'Shona',        status:'active',  note:'Greetings, numbers, animals, family', packKey:'shona' },
+    { name:'Ndebele',      status:'active',  note:'Greetings, numbers, animals, family', packKey:'ndebele' },
+    { name:'Xhosa',        status:'active',  note:'Greetings and numbers', packKey:'xhosa' },
+    { name:'Sotho',        status:'active',  note:'Greetings and numbers', packKey:'sotho' },
+    { name:'Tswana',       status:'active',  note:'Greetings and numbers', packKey:'tswana' },
+    { name:'Venda',        status:'active',  note:'Greetings and numbers', packKey:'venda' },
+    { name:'Chewa',        status:'active',  note:'Greetings only', packKey:'chewa' },
+    { name:'Kalanga',      status:'active',  note:'Greetings only', packKey:'kalanga' },
+    { name:'Chibarwe',     status:'active',  note:'Unverified — single source', packKey:'chibarwe' },
+    { name:'Tonga',        status:'planned', note:'No reliable source found yet' },
+    { name:'Ndau',         status:'planned', note:'No reliable source found yet' },
+    { name:'Shangani',     status:'planned', note:'No reliable source found yet' },
+    { name:'Nambya',       status:'planned', note:'No reliable source found yet' },
+    { name:'Koisan (Tshwao)', status:'planned', note:'Critically endangered — see note below' },
+    { name:'Sign Language',status:'planned', note:'Planned — video format' }
+  ];
+
+  function renderLanguages(){
+    var wrap = document.getElementById('lang-list');
+    wrap.innerHTML = '';
+    LANGUAGES.forEach(function(l){
+      var btn = document.createElement('button');
+      btn.className = 'lang-chip';
+      if(l.status === 'active' && l.packKey){
+        btn.onclick = function(){ openLangHub(l.packKey); };
+      } else {
+        btn.onclick = function(){ notReady(l.name + ' language pack'); };
+      }
+      btn.innerHTML =
+        '<span class="lang-dot ' + l.status + '"></span>' +
+        '<span class="lang-info">' +
+          '<span class="lang-name">' + l.name + '</span>' +
+          '<span class="lang-status ' + l.status + '">' + l.note + '</span>' +
+        '</span>';
+      wrap.appendChild(btn);
+    });
+  }
+  renderLanguages();
+
+  function hideAllScreens(){
+    document.getElementById('home').classList.remove('show');
+    document.querySelectorAll('.lesson-screen.show').forEach(function(el){ el.classList.remove('show'); });
+  }
+  // ============================================================
+  // LESSON CONTENT
+  // Supplementary ECD to Grade 2 content written for this app.
+  // The six learning areas match Zimbabwe's Heritage-Based Curriculum
+  // (2024-2030), but the individual topics below are NOT copied from
+  // the official syllabi and have not been checked by the Ministry.
+  // Adding a lesson = adding one L(...) line to a subject below.
+  // ============================================================
+  function C(emoji, big, text){ return { emoji:emoji, big:big, text:text }; }
+  function Q(emoji, q, options, answer){ return { emoji:emoji, q:q, options:options, answer:answer }; }
+  function L(id, title, emoji, cards, questions, group){
+    return { id:id, title:title, emoji:emoji, cards:cards, questions:questions, group:group || '' };
+  }
+  var TF = ['True','False'];
+
+  var SUBJECTS = {
+
+    english: { name:'English Language', emoji:'🔤', lessons:[
+      L('en','Letters A to E','🍎',[
+        C('🍎','A a','A is for Apple.'), C('⚽','B b','B is for Ball.'), C('🐱','C c','C is for Cat.'),
+        C('🐕','D d','D is for Dog.'), C('🥚','E e','E is for Egg.')],[
+        Q('🍎','Which word starts with A?',['Ball','Apple','Dog'],'Apple'),
+        Q('🐕','What letter does Dog start with?',['B','D','E'],'D'),
+        Q('🥚','Which word starts with E?',['Egg','Cat','Ball'],'Egg'),
+        Q('⚽','What letter does Ball start with?',['B','A','C'],'B')],'Alphabet'),
+      L('en2','Letters F to J','🐟',[
+        C('🐟','F f','F is for Fish.'), C('🐐','G g','G is for Goat.'), C('👒','H h','H is for Hat.'),
+        C('🐞','I i','I is for Insect.'), C('🥤','J j','J is for Juice.')],[
+        Q('🐐','Which word starts with G?',['Goat','Fish','Hat'],'Goat'),
+        Q('🐟','What letter does Fish start with?',['F','G','J'],'F'),
+        Q('👒','Which word starts with H?',['Juice','Hat','Insect'],'Hat'),
+        Q('🥤','What letter does Juice start with?',['I','H','J'],'J')],'Alphabet'),
+      L('en3','Letters K to O','🦁',[
+        C('🔑','K k','K is for Key.'), C('🦁','L l','L is for Lion.'), C('🥭','M m','M is for Mango.'),
+        C('👃','N n','N is for Nose.'), C('🍊','O o','O is for Orange.')],[    --cream:#FFF9EC;
     --ink:#2D2A32;
     --ink-soft:#5B5665;
     --english:#FFC93C;
