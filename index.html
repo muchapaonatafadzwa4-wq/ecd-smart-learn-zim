@@ -513,4 +513,132 @@
     <div class="lesson-topbar">
       <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
       <div class="lesson-title">Games</div>
+    </div><div class="lang-list">
+      <button class="lang-chip" onclick="openLesson('game-memory'); startMemory();">
+        <span class="lang-dot active"></span>
+        <span class="lang-info"><span class="lang-name">🧠 Memory Match</span><span class="lang-status active">Ready to play</span></span>
+      </button>
+      <button class="lang-chip" onclick="openLesson('game-count'); startCount();">
+        <span class="lang-dot active"></span>
+        <span class="lang-info"><span class="lang-name">🔢 Count to 5</span><span class="lang-status active">Ready to play</span></span>
+      </button>
     </div>
+  </div>
+
+  <div id="game-memory" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to games" onclick="openLesson('games-hub')">←</button>
+      <div class="lesson-title">Memory Match<small>Game 1</small></div>
+    </div>
+    <div class="memory-progress" id="memory-progress">Pairs found: 0 / 3</div>
+    <div class="memory-grid" id="memory-grid"></div>
+    <div class="complete-banner" id="memory-complete">🏆 You matched all the pairs!</div>
+  </div>
+
+  <div id="game-count" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to games" onclick="openLesson('games-hub')">←</button>
+      <div class="lesson-title">Count to 5<small>Game 2</small></div>
+    </div>
+    <div class="memory-progress" id="count-progress">Tap number: 1</div>
+    <div class="count-grid" id="count-grid"></div>
+    <div class="complete-banner" id="count-complete">🏆 You counted all the way to 5!</div>
+  </div>
+
+  <div id="rhythms-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Rhythms &amp; Songs</div>
+    </div>
+
+    <div class="section-label">Clap Along</div>
+    <div class="lesson-card">
+      <div class="lesson-sentence">Clap the pattern: clap – clap – (pause) – clap</div>
+      <div class="rhythm-pattern">👏 👏 <span class="pause">·</span> 👏</div>
+      <button class="clap-btn" onclick="doClap()">👏</button>
+      <div class="jump-count" id="clap-count">Claps: 0 / 3</div>
+    </div>
+    <div class="complete-banner" id="clap-complete">⭐ Great rhythm!</div>
+
+    <div class="section-label">Action Rhyme</div>
+    <div class="lesson-card">
+      <div class="rhyme-lines">Clap your hands, clap your hands,<br>Stomp your feet, stomp your feet,<br>Turn around, turn around,<br>Sit down, sit down!</div>
+      <div class="rhyme-icons">👏 🦶 🔄 🪑</div>
+      <button class="speak-btn" onclick="speak('Clap your hands, clap your hands. Stomp your feet, stomp your feet. Turn around, turn around. Sit down, sit down!')">🔊 Play rhyme</button>
+      <div class="source-note">Original rhyme written for ECD Smart-Learn Zim</div>
+    </div>
+  </div>
+
+  <div id="progress-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">My Progress<small id="prog-sub">Stars, scores and badges</small></div>
+    </div>
+
+    <div class="lesson-card">
+      <div class="prog-big" id="prog-stars">⭐ 0 stars</div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="source-note" id="prog-count">0 of 10 activities completed</div>
+      <div class="source-note" id="prog-quiz">Best quiz score: not played yet</div>
+    </div>
+
+    <div class="section-label">Badges</div>
+    <div class="badge-grid" id="badge-grid"></div>
+
+    <div class="section-label">Activities</div>
+    <div id="prog-list"></div>
+
+    <button class="reset-btn" id="reset-btn" onclick="resetProgress()">Reset progress</button>
+  </div>
+
+  <div id="teacher-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Teacher Area<small>Profile, progress and ideas</small></div>
+    </div>
+
+    <div id="t-setup" style="display:none;">
+      <div class="lesson-card">
+        <div class="big-emoji" style="font-size:44px;">🧑🏽‍🏫</div>
+        <div class="lesson-sentence" id="t-setup-title">Create teacher profile</div>
+        <div class="source-note">The PIN keeps this area away from learners. It is saved only on this phone.</div>
+      </div>
+      <label class="t-label" for="t-name">Your name</label>
+      <input id="t-name" class="t-input" type="text" maxlength="40" placeholder="e.g. Mrs Moyo" autocomplete="off">
+      <label class="t-label" for="t-school">School (optional)</label>
+      <input id="t-school" class="t-input" type="text" maxlength="60" placeholder="School name" autocomplete="off">
+      <label class="t-label" for="t-pin-new">Choose a 4-digit PIN</label>
+      <input id="t-pin-new" class="t-input" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+      <div class="t-error" id="t-setup-error"></div>
+      <button class="t-btn" onclick="saveTeacherProfile()">Save</button>
+    </div>
+
+    <div id="t-lock" style="display:none;">
+      <div class="lesson-card">
+        <div class="big-emoji" style="font-size:44px;">🔒</div>
+        <div class="lesson-sentence">Enter teacher PIN</div>
+      </div>
+      <input id="t-pin-enter" class="t-input" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+      <div class="t-error" id="t-lock-error"></div>
+      <button class="t-btn" onclick="unlockTeacher()">Unlock</button>
+      <button class="t-link" id="t-forgot" onclick="forgotPin()">Forgot PIN?</button>
+    </div>
+
+    <div id="t-dash" style="display:none;">
+      <div class="lesson-card">
+        <div class="lesson-sentence" id="t-welcome">Welcome</div>
+        <div class="source-note" id="t-school-line"></div>
+        <div class="source-note" id="t-count-line"></div>
+      </div>
+
+      <div class="section-label">Class overview</div>
+      <div id="t-class-list"></div>
+      <div class="source-note">Tap a learner to see each activity. Progress is stored on this phone only.</div>
+
+      <div class="section-label">Content for learners</div>
+      <div id="t-content-list"></div>
+      <div class="source-note">Tap an item to show or hide it on the learners' home screen.</div>
+
+      <div class="section-label">Classroom ideas</div>
+      <div id="t-resources"></div>
+      <div class="source-note">Suggested classroom ideas written for this app. They are not official curriculum guidance.</div>
