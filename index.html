@@ -1025,3 +1025,532 @@
         Q('🧑‍🤝‍🧑','Should you go with someone you do not know?',['No','Yes'],'No')],'Staying safe'),
       L('so5','My country: Zimbabwe','🇿🇼',[
         C('🇿🇼','Zimbabwe','Zimbabwe is our country. Our capital city is Harare.'),
+        C('🎨','Our flag','Our flag has green, yellow, red and black stripes, and a white triangle with a red star.'),
+        C('🐦','Zimbabwe Bird','The Zimbabwe Bird is a national symbol of our country.'),
+        C('🏛️','Great Zimbabwe','Great Zimbabwe is an old city built with stones.'),
+        C('🌊','Victoria Falls','Victoria Falls is a huge waterfall on the Zambezi River.')],[
+        Q('🇿🇼','What is the capital city of Zimbabwe?',['Harare','Lusaka'],'Harare'),
+        Q('🎨','What is on our flag?',['A red star','A blue moon'],'A red star'),
+        Q('🏛️','Great Zimbabwe was built with...',['Stones','Paper'],'Stones'),
+        Q('🌊','Which is a huge waterfall in Zimbabwe?',['Victoria Falls','Harare'],'Victoria Falls')],'Heritage'),
+      L('so6','Our culture','🥁',[
+        C('🍲','Sadza','Sadza is a popular food. It is made from maize meal and eaten with relish.'),
+        C('🥁','Music','Drums, hosho and the mbira are traditional instruments from Zimbabwe.'),
+        C('💃','Dance','People dance at celebrations. Jerusarema is a Shona dance. Isitshikitsha is a Ndebele dance.'),
+        C('🗣️','Many languages',"Zimbabwe has many languages. We respect everyone's language.")],[
+        Q('🍲','Sadza is made from...',['Maize meal','Sand'],'Maize meal'),
+        Q('🥁','Which one is a traditional instrument?',['Mbira','Television'],'Mbira'),
+        Q('💃','Isitshikitsha is a dance of the...',['Ndebele people','Penguins'],'Ndebele people'),
+        Q('🗣️',"True or False: We respect everyone's language.",TF,'True')],'Heritage'),
+      L('so7','Unhu / Ubuntu: being kind','🤝',[
+        C('🤝','Unhu / Ubuntu','Unhu or Ubuntu means being kind, respectful and caring to other people.'),
+        C('🙏','Respect','We greet and listen to our elders and teachers.'),
+        C('🤲','Sharing','We share with others.'),
+        C('😊','Honesty','We tell the truth.')],[
+        Q('😢','Your friend is sad. What can you do?',['Be kind and ask what is wrong','Laugh at them'],'Be kind and ask what is wrong'),
+        Q('✏️','You find a pencil that is not yours. What do you do?',['Give it to the teacher','Keep it'],'Give it to the teacher'),
+        Q('🍞','A friend has no food at break. What can you do?',['Share with them','Hide your food'],'Share with them'),
+        Q('🙏','True or False: We listen to our elders and teachers.',TF,'True')],'Values'),
+      L('so8',"Respecting each other's beliefs",'🕊️',[
+        C('🙏','Different beliefs','People pray and worship in different ways.'),
+        C('🕊️','Respect',"We respect other people's beliefs, even when they are different from ours."),
+        C('🏠','Where people pray','Families may pray at home or in places of worship.')],[
+        Q('🙏',"True or False: We respect other people's beliefs.",TF,'True'),
+        Q('🕊️','A friend prays differently from you. What should you do?',['Respect them','Laugh at them'],'Respect them'),
+        Q('🏠','True or False: Everyone prays in exactly the same way.',TF,'False')],'Values')
+    ]},
+
+    pea: { name:'P.E.A', emoji:'🤸', lessons:[
+      L('pe-move','Ways to move','🏃',[
+        C('🚶','Walk','We walk slowly.'), C('🏃','Run','We run fast. Run safely.'),
+        C('🦶','Hop','We hop on one foot.'), C('🐛','Crawl','We crawl on our hands and knees.'),
+        C('🧘','Stretch','We stretch our arms and legs.')],[
+        Q('🏃','Which move is fast?',['Run','Crawl'],'Run'),
+        Q('🦶','Hop means jumping on...',['One foot','Two hands'],'One foot'),
+        Q('🐛','We crawl on our hands and...',['Knees','Ears'],'Knees'),
+        Q('🚶','Which move is slow?',['Walk','Run'],'Walk')],'Physical activities'),
+      L('pe-warm','Warm up and play safely','🙆',[
+        C('🙆','Warm up','Before we play, we warm up. Stretch your arms and legs.'),
+        C('🏃','Play safely','Play in a safe place. Take turns.'),
+        C('🥤','Drink water','Drink water after exercise.'),
+        C('😌','Cool down','After playing, breathe slowly and rest.')],[
+        Q('🙆','What do we do before we play?',['Warm up','Sleep'],'Warm up'),
+        Q('🥤','What should we drink after exercise?',['Water','Nothing'],'Water'),
+        Q('🏃','True or False: We should take turns when we play.',TF,'True')],'Physical activities'),
+      L('pe-trad','Traditional games','🎲',[
+        C('🏠','Mahumbwe','Mahumbwe is a make-believe game. Children pretend to be mothers, fathers and other people in a family.'),
+        C('🔵','Nhodo','Nhodo is a traditional game played with small stones.'),
+        C('🎲','Tsoro','Tsoro is a traditional board game that makes us think and plan.'),
+        C('🤗','Playing together','Traditional games teach us to share, take turns and work together.')],[
+        Q('🏠','Which game is a make-believe game?',['Mahumbwe','Football'],'Mahumbwe'),
+        Q('🔵','Nhodo is played with small...',['Stones','Balloons'],'Stones'),
+        Q('🎲','Tsoro is a traditional...',['Board game','Song'],'Board game'),
+        Q('🤗','What do games teach us?',['To share and take turns','To fight'],'To share and take turns')],'Traditional games and dance'),
+      L('pe-dance','Dance','💃',[
+        C('💃','Dance','Dance is moving to music. We can clap, stamp and sway.'),
+        C('🦶','Isitshikitsha','Isitshikitsha is a Ndebele dance. Dancers lift a foot high and stamp it down.'),
+        C('🎉','Jerusarema (Mbende)','Jerusarema, also called Mbende, is a Shona dance.'),
+        C('🥁','Music and movement','Dance often goes with drums, clapping and singing.')],[
+        Q('🦶','Isitshikitsha is a dance of the...',['Ndebele people','Penguins'],'Ndebele people'),
+        Q('🎉','Jerusarema is also called...',['Mbende','Tsoro'],'Mbende'),
+        Q('💃','In Isitshikitsha, dancers lift a foot and...',['Stamp it down','Sit down'],'Stamp it down')],'Traditional games and dance'),
+      L('pa-colours','Colours and mixing','🎨',[
+        C('🔴','Primary colours','Red, blue and yellow can be mixed to make other colours.'),
+        C('🟠','Red + yellow','Red and yellow make orange.'),
+        C('🟢','Blue + yellow','Blue and yellow make green.'),
+        C('🟣','Red + blue','Red and blue make purple.')],[
+        Q('🟠','Red and yellow make...',['Orange','Green','Purple'],'Orange'),
+        Q('🟢','Blue and yellow make...',['Green','Orange','Purple'],'Green'),
+        Q('🟣','Red and blue make...',['Purple','Orange','Green'],'Purple')],'Arts'),
+      L('pa-craft','Drawing and craft','✏️',[
+        C('✏️','Drawing','We draw with pencils and crayons. We can draw people, animals and plants.'),
+        C('🏺','Clay','Clay can be shaped into pots and animals.'),
+        C('🧺','Weaving','People weave baskets and mats from grass and reeds.'),
+        C('🗿','Stone sculpture','Zimbabwe is famous for beautiful stone sculptures.')],[
+        Q('🏺','What can we shape from clay?',['Pots','Rain'],'Pots'),
+        Q('🧺','Baskets can be woven from...',['Grass and reeds','Glass'],'Grass and reeds'),
+        Q('✏️','What do we draw with?',['Pencils and crayons','Spoons'],'Pencils and crayons'),
+        Q('🗿','True or False: Zimbabwe is famous for stone sculptures.',TF,'True')],'Arts'),
+      L('mu-beat','Music and beats','🥁',[
+        C('🥁','Drum','A drum makes a beat. We can play it fast or slow.'),
+        C('🎵','Mbira','The mbira is a Zimbabwean instrument played with the thumbs.'),
+        C('🎶','Hosho','Hosho are rattles. We shake them to keep the beat.'),
+        C('👏','Clap the beat','Clap along with the beat.')],[
+        Q('🎵','Which instrument is played with the thumbs?',['Mbira','Drum'],'Mbira'),
+        Q('🎶','Which instrument do we shake?',['Hosho','Mbira'],'Hosho'),
+        Q('🥁','A drum makes a...',['Beat','Smell'],'Beat')],'Music and rhythms')
+    ]}
+  };
+
+  // ============================================================
+  // LANGUAGE PACKS (Shona, Ndebele)
+  // Words below were checked against published references (Omniglot,
+  // the University of Wisconsin Shona family page, the Northern
+  // Ndebele blog and Wiktionary, and animal-name vocabulary lists).
+  // A fluent teacher must still review every word before release.
+  // Audio is not included yet. Shona and Ndebele are NOT read aloud
+  // by the phone's voice because it would pronounce them wrongly.
+  // Adding a topic or word = adding one line below.
+  // ============================================================
+  var LANG_PACKS = {
+    shona: {
+      displayName:'Shona',
+      note:'Words checked against published sources. A fluent Shona teacher should review them before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Mhoro', meaning:'Hello', emoji:'👋' },
+          { word:'Mangwanani', meaning:'Good morning', emoji:'🌅' },
+          { word:'Ndatenda', meaning:'Thank you', emoji:'🙏' } ]},
+        { id:'numbers', title:'Numbers 1 to 5', emoji:'🔢', words:[
+          { word:'Motsi', meaning:'One', emoji:'1️⃣' }, { word:'Piri', meaning:'Two', emoji:'2️⃣' },
+          { word:'Tatu', meaning:'Three', emoji:'3️⃣' }, { word:'China', meaning:'Four', emoji:'4️⃣' },
+          { word:'Shanu', meaning:'Five', emoji:'5️⃣' } ]},
+        { id:'animals', title:'Animals', emoji:'🐄', words:[
+          { word:'Imbwa', meaning:'Dog', emoji:'🐕' }, { word:'Katsi', meaning:'Cat', emoji:'🐱' },
+          { word:'Mombe', meaning:'Cow', emoji:'🐄' }, { word:'Mbudzi', meaning:'Goat', emoji:'🐐' },
+          { word:'Huku', meaning:'Chicken', emoji:'🐔' }, { word:'Nzou', meaning:'Elephant', emoji:'🐘' },
+          { word:'Shumba', meaning:'Lion', emoji:'🦁' } ]},
+        { id:'family', title:'Family', emoji:'👨‍👩‍👧', words:[
+          { word:'Amai', meaning:'Mother', emoji:'👩' }, { word:'Baba', meaning:'Father', emoji:'👨' },
+          { word:'Mwana', meaning:'Child', emoji:'🧒' }, { word:'Sekuru', meaning:'Grandfather', emoji:'👴' },
+          { word:'Ambuya', meaning:'Grandmother', emoji:'👵' } ]}
+      ]
+    },
+    ndebele: {
+      displayName:'Ndebele',
+      note:'Words checked against published sources for Zimbabwean (Northern) Ndebele. A fluent Ndebele teacher should review them before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Salibonani', meaning:'Hello', emoji:'👋' },
+          { word:'Unjani?', meaning:'How are you?', emoji:'🙂' },
+          { word:'Ngiyabonga', meaning:'Thank you', emoji:'🙏' },
+          { word:'Hamba kahle', meaning:'Goodbye (go well)', emoji:'🚶' } ]},
+        { id:'numbers', title:'Numbers 1 to 5', emoji:'🔢', words:[
+          { word:'Kunye', meaning:'One', emoji:'1️⃣' }, { word:'Kubili', meaning:'Two', emoji:'2️⃣' },
+          { word:'Kuthathu', meaning:'Three', emoji:'3️⃣' }, { word:'Kune', meaning:'Four', emoji:'4️⃣' },
+          { word:'Kuhlanu', meaning:'Five', emoji:'5️⃣' } ]},
+        { id:'animals', title:'Animals', emoji:'🐄', words:[
+          { word:'Inja', meaning:'Dog', emoji:'🐕' }, { word:'Inkomo', meaning:'Cow', emoji:'🐄' },
+          { word:'Imbuzi', meaning:'Goat', emoji:'🐐' }, { word:'Inkukhu', meaning:'Chicken', emoji:'🐔' },
+          { word:'Indlovu', meaning:'Elephant', emoji:'🐘' }, { word:'Ingulube', meaning:'Pig', emoji:'🐖' } ]},
+        { id:'family', title:'Family', emoji:'👨‍👩‍👧', words:[
+          { word:'Umama', meaning:'Mother', emoji:'👩' }, { word:'Ubaba', meaning:'Father', emoji:'👨' },
+          { word:'Umntwana', meaning:'Child', emoji:'🧒' }, { word:'Ugogo', meaning:'Grandmother', emoji:'👵' } ]}
+      ]
+    },
+    xhosa: {
+      displayName:'Xhosa',
+      note:'Greeting, thanks and numbers checked against Omniglot. A fluent Xhosa teacher should review them before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Molo', meaning:'Hello', emoji:'👋' },
+          { word:'Unjani?', meaning:'How are you?', emoji:'🙂' },
+          { word:'Enkosi', meaning:'Thank you', emoji:'🙏' } ]},
+        { id:'numbers', title:'Numbers 1 to 5', emoji:'🔢', words:[
+          { word:'Inye', meaning:'One', emoji:'1️⃣' }, { word:'Zimbini', meaning:'Two', emoji:'2️⃣' },
+          { word:'Zintathu', meaning:'Three', emoji:'3️⃣' }, { word:'Zine', meaning:'Four', emoji:'4️⃣' },
+          { word:'Zintlanu', meaning:'Five', emoji:'5️⃣' } ]}
+      ]
+    },
+    sotho: {
+      displayName:'Sotho',
+      note:'Greeting, thanks and numbers checked against Omniglot for Southern Sotho. A fluent Sotho teacher should review them before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Dumela', meaning:'Hello', emoji:'👋' },
+          { word:'O kae?', meaning:'How are you?', emoji:'🙂' },
+          { word:'Ke a leboha', meaning:'Thank you', emoji:'🙏' } ]},
+        { id:'numbers', title:'Numbers 1 to 5', emoji:'🔢', words:[
+          { word:'Ngwe', meaning:'One', emoji:'1️⃣' }, { word:'Pedi', meaning:'Two', emoji:'2️⃣' },
+          { word:'Tharo', meaning:'Three', emoji:'3️⃣' }, { word:'Nne', meaning:'Four', emoji:'4️⃣' },
+          { word:'Hlano', meaning:'Five', emoji:'5️⃣' } ]}
+      ]
+    },
+    tswana: {
+      displayName:'Tswana',
+      note:'Greeting, thanks and numbers checked against Omniglot and other published Setswana sources. A fluent Tswana teacher should review them before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Dumela', meaning:'Hello', emoji:'👋' },
+          { word:'O kae?', meaning:'How are you?', emoji:'🙂' },
+          { word:'Ke a leboga', meaning:'Thank you', emoji:'🙏' } ]},
+        { id:'numbers', title:'Numbers 1 to 5', emoji:'🔢', words:[
+          { word:'Nngwe', meaning:'One', emoji:'1️⃣' }, { word:'Pedi', meaning:'Two', emoji:'2️⃣' },
+          { word:'Tharo', meaning:'Three', emoji:'3️⃣' }, { word:'Nne', meaning:'Four', emoji:'4️⃣' },
+          { word:'Tlhano', meaning:'Five', emoji:'5️⃣' } ]}
+      ]
+    },
+    venda: {
+      displayName:'Venda',
+      note:'Greeting, thanks and numbers checked against Omniglot. Venda has separate greetings for male and female speakers; only one form is shown here. A fluent Venda teacher should review them before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Ndaa', meaning:'Hello (said by a man)', emoji:'👋' },
+          { word:'Aa', meaning:'Hello (said by a woman)', emoji:'👋' },
+          { word:'Ndo livhuwa', meaning:'Thank you', emoji:'🙏' } ]},
+        { id:'numbers', title:'Numbers 1 to 5', emoji:'🔢', words:[
+          { word:'Thihi', meaning:'One', emoji:'1️⃣' }, { word:'Mbili', meaning:'Two', emoji:'2️⃣' },
+          { word:'Raru', meaning:'Three', emoji:'3️⃣' }, { word:'Iṋa', meaning:'Four', emoji:'4️⃣' },
+          { word:'Ṱhanu', meaning:'Five', emoji:'5️⃣' } ]}
+      ]
+    },
+    chewa: {
+      displayName:'Chewa',
+      note:'Greeting and thanks checked against Omniglot for Chichewa/Nyanja. Numbers are not included: Chewa numbers change form depending on what is being counted (noun-class agreement), and a reliable simple form for young learners could not be confirmed. A fluent Chewa teacher should review this before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Moni', meaning:'Hello', emoji:'👋' },
+          { word:'Muli bwanji?', meaning:'How are you?', emoji:'🙂' },
+          { word:'Zikomo', meaning:'Thank you', emoji:'🙏' } ]}
+      ]
+    },
+    kalanga: {
+      displayName:'Kalanga',
+      note:'Greeting and thanks are from kalanga.org, a Kalanga cultural organisation site. No reliable source for simple numbers 1-5 was found. A fluent Kalanga teacher must review this before release. Recorded audio is coming later.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks', emoji:'👋', words:[
+          { word:'Dumilani', meaning:'Hello', emoji:'👋' },
+          { word:'Mamuka tjini?', meaning:'How are you?', emoji:'🙂' },
+          { word:'Ndaboka', meaning:'Thank you', emoji:'🙏' } ]}
+      ]
+    },
+    chibarwe: {
+      displayName:'Chibarwe',
+      note:'LOW CONFIDENCE: these words come from a single tourism website, not a language reference, so they have not been double-checked. A fluent Chibarwe (Hwesa) speaker must verify every word before this pack is used with children. No numbers were found at all.',
+      topics:[
+        { id:'greet', title:'Greetings and thanks (unverified)', emoji:'👋', words:[
+          { word:'Mhoroi', meaning:'Hello', emoji:'👋' },
+          { word:'Ndinokutendai', meaning:'I thank you', emoji:'🙏' } ]}
+      ]
+    }
+  };
+
+  // ============================================================
+  // LESSON PLAYER: shows learning cards, then questions.
+  // Every subject lesson and every language topic uses this one player.
+  // ============================================================
+  var player = { lesson:null, ci:0, qi:0, score:0, questions:[], onExit:null, opts:{} };
+
+  function startLesson(lesson, onExit, opts){
+    player.lesson = lesson; player.onExit = onExit; player.opts = opts || {};
+    player.ci = 0; player.qi = 0; player.score = 0;
+    player.questions = shuffle(lesson.questions).map(function(q){
+      return { emoji:q.emoji, q:q.q, answer:q.answer, options:shuffle(q.options) };
+    });
+    document.getElementById('player-title').textContent = lesson.title;
+    document.getElementById('player-sub').textContent = player.opts.sub || '';
+    openLesson('player-screen');
+    showPlayerPart('learn');
+    renderCard();
+  }
+  function replayLesson(){ startLesson(player.lesson, player.onExit, player.opts); }
+  function exitLesson(){ if(player.onExit) player.onExit(); else backHome(); }
+
+  function showPlayerPart(p){
+    ['learn','quiz','result'].forEach(function(name){
+      document.getElementById('player-' + name).style.display = (name === p) ? 'block' : 'none';
+    });
+  }
+
+  function renderCard(){
+    var c = player.lesson.cards[player.ci];
+    var n = player.lesson.cards.length;
+    var isLang = !!player.opts.lang;
+    document.getElementById('player-progress').textContent = 'Learn · ' + (player.ci + 1) + ' of ' + n;
+    var em = document.getElementById('pl-emoji');
+    em.textContent = c.emoji;
+    em.style.fontSize = c.emoji.length > 20 ? '30px' : (c.emoji.length > 10 ? '44px' : '');
+    var big = document.getElementById('pl-big');
+    big.textContent = c.big || '';
+    big.style.display = c.big ? 'block' : 'none';
+    big.style.fontSize = (c.big && c.big.length > 14) ? '22px' : '';
+    var txt = document.getElementById('pl-text');
+    txt.textContent = isLang ? ('means: ' + c.text) : c.text;
+    txt.style.fontSize = c.text.length > 60 ? '16px' : '';
+    var sp = document.getElementById('pl-speak');
+    if(isLang){
+      sp.className = 'speak-btn pending';
+      sp.textContent = '🔊 Audio coming soon';
+      sp.onclick = function(){ notReady('Recorded ' + player.opts.langName + ' audio'); };
+    } else {
+      sp.className = 'speak-btn';
+      sp.textContent = '🔊 Play sound';
+      sp.onclick = function(){ speak(c.text); };
+    }
+    document.getElementById('pl-next').textContent = (player.ci === n - 1) ? 'Start the questions →' : 'Next →';
+  }
+
+  function nextCard(){
+    if(player.ci < player.lesson.cards.length - 1){
+      player.ci++;
+      renderCard();
+    } else {
+      player.qi = 0;
+      showPlayerPart('quiz');
+      renderPQ();
+    }
+  }
+
+  function renderPQ(){
+    var q = player.questions[player.qi];
+    document.getElementById('pq-progress').textContent =
+      'Question ' + (player.qi + 1) + ' of ' + player.questions.length;
+    var em = document.getElementById('pq-emoji');
+    em.textContent = q.emoji;
+    em.style.fontSize = q.emoji.length > 12 ? '32px' : '';
+    document.getElementById('pq-question').textContent = q.q;
+    document.getElementById('pq-next').classList.remove('show');
+    var list = document.getElementById('pq-opts');
+    list.innerHTML = '';
+    q.options.forEach(function(opt){
+      var b = document.createElement('button');
+      b.className = 'quiz-opt';
+      b.textContent = opt;
+      b.onclick = function(){ answerPQ(b, opt, q.answer); };
+      list.appendChild(b);
+    });
+  }
+
+  function answerPQ(btn, chosen, correct){
+    document.querySelectorAll('#pq-opts .quiz-opt').forEach(function(b){
+      b.disabled = true;
+      if(b.textContent === correct) b.classList.add('correct');
+    });
+    if(chosen === correct){ player.score++; } else { btn.classList.add('wrong'); }
+    var nb = document.getElementById('pq-next');
+    nb.textContent = (player.qi === player.questions.length - 1) ? 'Finish →' : 'Next →';
+    nb.classList.add('show');
+  }
+
+  function nextPQ(){
+    player.qi++;
+    if(player.qi >= player.questions.length){ finishLesson(); } else { renderPQ(); }
+  }
+
+  function finishLesson(){
+    showPlayerPart('result');
+    var total = player.questions.length;
+    document.getElementById('pr-emoji').textContent = (player.score === total) ? '🏆' : '⭐';
+    document.getElementById('pr-text').textContent = 'You got ' + player.score + ' out of ' + total;
+    markDone(player.lesson.id);
+  }
+
+  // ============================================================
+  // HUB: a list of lessons for a subject or a language
+  // ============================================================
+  function renderHub(cfg){
+    document.getElementById('hub-title').textContent = cfg.title;
+    document.getElementById('hub-sub').textContent = cfg.sub || '';
+    document.getElementById('hub-back').onclick = cfg.back;
+    var list = document.getElementById('hub-list');
+    list.innerHTML = '';
+    var lastGroup = null;
+    cfg.items.forEach(function(it){
+      if(it.group && it.group !== lastGroup){
+        var g = document.createElement('div');
+        g.className = 'section-label';
+        g.textContent = it.group;
+        list.appendChild(g);
+        lastGroup = it.group;
+      }
+      var b = document.createElement('button');
+      b.className = 'lang-chip';
+      var em = document.createElement('span'); em.style.fontSize = '26px'; em.textContent = it.emoji;
+      var info = document.createElement('span'); info.className = 'lang-info';
+      var nm = document.createElement('span'); nm.className = 'lang-name'; nm.textContent = it.label;
+      var st = document.createElement('span'); st.className = 'lang-status'; st.textContent = it.sub || '';
+      info.appendChild(nm); info.appendChild(st);
+      var tick = document.createElement('span'); tick.textContent = it.done ? '✅' : '';
+      b.appendChild(em); b.appendChild(info); b.appendChild(tick);
+      b.onclick = it.onclick;
+      list.appendChild(b);
+    });
+    var qb = document.getElementById('hub-quiz');
+    if(cfg.quiz){
+      qb.style.display = 'block';
+      qb.textContent = cfg.quiz.label;
+      qb.onclick = cfg.quiz.onclick;
+    } else {
+      qb.style.display = 'none';
+    }
+    document.getElementById('hub-note').textContent = cfg.note || '';
+    openLesson('hub-screen');
+  }
+
+  function openSubject(id){
+    var s = SUBJECTS[id];
+    var doneLessons = s.lessons.filter(function(l){ return progress.done[l.id]; }).length;
+    var items = s.lessons.map(function(l){
+      return {
+        emoji:l.emoji, label:l.title, group:l.group,
+        sub:l.cards.length + ' cards · ' + l.questions.length + ' questions',
+        done:!!progress.done[l.id],
+        onclick:function(){
+          startLesson(l, function(){ openSubject(id); }, { sub:s.name });
+        }
+      };
+    });
+    if(id === 'pea'){
+      items.push({ emoji:'🤸', label:"Let's Jump", group:'Move and play', sub:'Tap to jump 3 times',
+        done:!!progress.done['pea'], onclick:function(){ openLesson('lesson-pea'); resetJump(); } });
+      items.push({ emoji:'👏', label:'Clap Along and action rhyme', group:'Move and play', sub:'Rhythms & Songs',
+        done:!!progress.done['clap'], onclick:function(){ openLesson('rhythms-screen'); resetClap(); } });
+      items.push({ emoji:'🎮', label:'Games', group:'Move and play', sub:'Memory Match and Count to 5',
+        done:!!(progress.done['game-memory'] && progress.done['game-count']), onclick:function(){ openLesson('games-hub'); } });
+    }
+    renderHub({
+      title:s.name,
+      sub:doneLessons + ' of ' + s.lessons.length + ' lessons done',
+      back:function(){ backHome(); },
+      items:items,
+      quiz:{ label:'❓ Practice quiz: ' + s.name, onclick:function(){ openLesson('quiz-screen'); startQuiz(id); } }
+    });
+  }
+
+  function buildLangLesson(key, topic){
+    var words = topic.words;
+    var cards = words.map(function(w){ return { emoji:w.emoji, big:w.word, text:w.meaning }; });
+    var qs = shuffle(words).slice(0, 5).map(function(w){
+      var others = shuffle(words.filter(function(x){ return x.meaning !== w.meaning; }))
+        .slice(0, 2).map(function(x){ return x.meaning; });
+      return { emoji:w.emoji, q:'What does "' + w.word + '" mean?', options:[w.meaning].concat(others), answer:w.meaning };
+    });
+    return { id:'pk-' + key + '-' + topic.id, title:topic.title, emoji:topic.emoji, cards:cards, questions:qs };
+  }
+
+  function openLangHub(key){
+    var pack = LANG_PACKS[key];
+    var items = pack.topics.map(function(t){
+      var id = 'pk-' + key + '-' + t.id;
+      return {
+        emoji:t.emoji, label:t.title, sub:t.words.length + ' words', done:!!progress.done[id],
+        onclick:function(){
+          startLesson(buildLangLesson(key, t), function(){ openLangHub(key); },
+            { lang:true, langName:pack.displayName, sub:'Indigenous Languages · ' + pack.displayName });
+        }
+      };
+    });
+    renderHub({
+      title:pack.displayName, sub:'Indigenous Languages',
+      back:function(){ openLesson('lang-select'); },
+      items:items, note:pack.note
+    });
+  }
+
+  function openLesson(id){
+    hideAllScreens();
+    document.getElementById(id).classList.add('show');
+  }
+  function backHome(){
+    hideAllScreens();
+    document.getElementById('home').classList.add('show');
+  }
+
+  function speak(text){
+    try{
+      if('speechSynthesis' in window){
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(text);
+        u.rate = 0.85;
+        window.speechSynthesis.speak(u);
+      } else {
+        notReady('Audio playback not supported on this browser');
+      }
+    }catch(e){ /* fail silently, never break the lesson */ }
+  }
+
+  var quizState = { questions:[], index:0, score:0, subject:null };
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  // Every lesson question feeds the quizzes automatically.
+  function questionPool(subjectId){
+    var keys = subjectId ? [subjectId] : Object.keys(SUBJECTS);
+    var pool = [];
+    keys.forEach(function(k){
+      SUBJECTS[k].lessons.forEach(function(l){
+        l.questions.forEach(function(q){
+          pool.push({ emoji:q.emoji, question:q.q, correct:q.answer, options:q.options });
+        });
+      });
+    });
+    return pool;
+  }
+
+  function startQuiz(subjectId){
+    quizState.subject = subjectId || null;
+    var n = subjectId ? 5 : 8;
+    quizState.questions = shuffle(questionPool(subjectId)).slice(0, n).map(function(q){
+      return { emoji:q.emoji, question:q.question, correct:q.correct, options:shuffle(q.options) };
+    });
+    quizState.index = 0;
+    quizState.score = 0;
+    document.getElementById('quiz-sub').textContent =
+      subjectId ? (SUBJECTS[subjectId].name + ' practice') : 'Mixed review · all subjects';
+    document.getElementById('quiz-play').style.display = 'block';
+    document.getElementById('quiz-result').classList.remove('show');
+    renderQuestion();
+  }
+
+  function renderQuestion(){
+    var q = quizState.questions[quizState.index];
+    document.getElementById('quiz-progress').textContent =
+      'Question ' + (quizState.index+1) + ' of ' + quizState.questions.length;
+    document.getElementById('quiz-emoji').textContent = q.emoji;
+    document.getElementById('quiz-question').textContent = q.question;
+    document.getElementById('quiz-next-btn').classList.remove('show');
+
+    var list = document.getElementById('quiz-opt-list');
+    list.innerHTML = '';
+    q.options.forEach(function(opt){
+      var b = document.createElement('button');
+      b.className = 'quiz-opt';
+      b.textContent = opt;
+      b.onclick = function(){ answerQuiz(b, opt, q.correct); };I 
