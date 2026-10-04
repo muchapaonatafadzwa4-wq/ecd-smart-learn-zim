@@ -1554,3 +1554,677 @@
       b.className = 'quiz-opt';
       b.textContent = opt;
       b.onclick = function(){ answerQuiz(b, opt, q.correct); };I 
+      list.appendChild(b);
+    });
+  }
+
+  function answerQuiz(btn, chosen, correct){
+    var buttons = document.querySelectorAll('#quiz-opt-list .quiz-opt');
+    buttons.forEach(function(b){
+      b.disabled = true;
+      if(b.textContent === correct) b.classList.add('correct');
+    });
+    if(chosen === correct){
+      quizState.score++;
+    } else {
+      btn.classList.add('wrong');
+    }
+    document.getElementById('quiz-next-btn').classList.add('show');
+    document.getElementById('quiz-next-btn').textContent =
+      (quizState.index === quizState.questions.length-1) ? 'See Score →' : 'Next →';
+  }
+
+  function nextQuestion(){
+    quizState.index++;
+    if(quizState.index >= quizState.questions.length){
+      showQuizResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showQuizResult(){
+    document.getElementById('quiz-play').style.display = 'none';
+    var total = quizState.questions.length;
+    var score = quizState.score;
+    document.getElementById('score-text').textContent = 'You scored ' + score + ' / ' + total;
+    document.getElementById('score-emoji').textContent = (score === total) ? '🏆' : (score > 0 ? '⭐' : '💪');
+    document.getElementById('quiz-result').classList.add('show');
+    if(quizState.subject === null){ recordQuiz(score, total); }
+  }
+
+  // ---- Memory Match game ----
+  var MEMORY_ICONS = ['🍎','🐐','🐟'];
+  var memoryState = { cards:[], flipped:[], matchedCount:0, locked:false };
+
+  function startMemory(){
+    var deck = shuffle(MEMORY_ICONS.concat(MEMORY_ICONS)).map(function(icon, i){
+      return { id:i, icon:icon, flipped:false, matched:false };
+    });
+    memoryState = { cards:deck, flipped:[], matchedCount:0, locked:false };
+    document.getElementById('memory-complete').classList.remove('show');
+    document.getElementById('memory-progress').textContent = 'Pairs found: 0 / ' + MEMORY_ICONS.length;
+    renderMemory();
+  }
+
+  function renderMemory(){
+    var grid = document.getElementById('memory-grid');
+    grid.innerHTML = '';
+    memoryState.cards.forEach(function(card){
+      var b = document.createElement('button');
+      b.className = 'memory-card' + (card.matched ? ' matched' : (card.flipped ? ' flipped' : ''));
+      b.textContent = (card.matched || card.flipped) ? card.icon : '❓';
+      b.onclick = function(){ flipMemoryCard(card.id); };
+      grid.appendChild(b);
+    });
+  }
+
+  function flipMemoryCard(id){
+    if(memoryState.locked) return;
+    var card = memoryState.cards[id];
+    if(card.flipped || card.matched) return;
+
+    card.flipped = true;
+    memoryState.flipped.push(card);
+    renderMemory();
+
+    if(memoryState.flipped.length === 2){
+      memoryState.locked = true;
+      var a = memoryState.flipped[0], b = memoryState.flipped[1];
+      if(a.icon === b.icon){
+        a.matched = true; b.matched = true;
+        memoryState.matchedCount++;
+        document.getElementById('memory-progress').textContent =
+          'Pairs found: ' + memoryState.matchedCount + ' / ' + MEMORY_ICONS.length;
+        memoryState.flipped = [];
+        memoryState.locked = false;
+        renderMemory();
+        if(memoryState.matchedCount === MEMORY_ICONS.length){
+          document.getElementById('memory-complete').classList.add('show');
+          markDone('game-memory');
+        }
+      } else {
+        setTimeout(function(){
+          a.flipped = false; b.flipped = false;
+          memoryState.flipped = [];
+          memoryState.locked = false;
+          renderMemory();
+        }, 700);
+      }
+    }
+  }
+
+  // ---- Count to 5 game ----
+  var countState = { order:[], next:1 };
+
+  function startCount(){
+    countState.order = shuffle([1,2,3,4,5]);
+    countState.next = 1;
+    document.getElementById('count-complete').classList.remove('show');
+    document.getElementById('count-progress').textContent = 'Tap number: 1';
+    renderCount();
+  }
+
+  function renderCount(){
+    var grid = document.getElementById('count-grid');
+    grid.innerHTML = '';
+    countState.order.forEach(function(n){
+      var b = document.createElement('button');
+      b.className = 'count-btn' + (n < countState.next ? ' done' : '');
+      b.textContent = n;
+      if(n < countState.next) b.disabled = true;
+      b.onclick = function(){ tapCount(n, b); };
+      grid.appendChild(b);
+    });
+  }
+
+  function tapCount(n, btn){
+    if(n === countState.next){
+      btn.classList.add('done');
+      btn.disabled = true;
+      countState.next++;
+      if(countState.next > 5){
+        document.getElementById('count-complete').classList.add('show');
+        document.getElementById('count-progress').textContent = 'All done!';
+        markDone('game-count');
+      } else {
+        document.getElementById('count-progress').textContent = 'Tap number: ' + countState.next;
+      }
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(function(){ btn.classList.remove('wrong'); }, 400);
+    }
+  }
+
+  // ---- Rhythm sound + clap counter ----
+  // This synthesises a short clap-like sound entirely on-device, so the
+  // interaction can be tested now. The real app will swap this for a
+  // recorded clap/audio file — the button and counter logic won't change.
+  var audioCtx;
+  function playClapSound(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var duration = 0.12;
+      var bufferSize = Math.floor(audioCtx.sampleRate * duration);
+      var buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      var data = buffer.getChannelData(0);
+      for(var i=0;i<bufferSize;i++){
+        data[i] = (Math.random()*2-1) * (1 - i/bufferSize);
+      }
+      var source = audioCtx.createBufferSource();
+      source.buffer = buffer;
+      var gain = audioCtx.createGain();
+      gain.gain.value = 0.6;
+      source.connect(gain).connect(audioCtx.destination);
+      source.start();
+    }catch(e){ /* never let audio errors break the lesson */ }
+  }
+
+  var clapTally = 0;
+  function resetClap(){
+    clapTally = 0;
+    document.getElementById('clap-count').textContent = 'Claps: 0 / 3';
+    document.getElementById('clap-complete').classList.remove('show');
+  }
+  function doClap(){
+    playClapSound();
+    if(clapTally >= 3) return;
+    clapTally++;
+    document.getElementById('clap-count').textContent = 'Claps: ' + clapTally + ' / 3';
+    if(clapTally === 3){
+      document.getElementById('clap-complete').classList.add('show');
+      markDone('clap');
+    }
+  }
+
+  // ---- Learner progress ----
+  // Saved on the device (localStorage), so it works offline. If saving is
+  // blocked, the app still works — progress just lasts until you close it.
+  var PROGRESS_KEY = 'ecdzim_progress_v1';
+  var progress = { done:{}, quizBest:0, quizTotal:0, quizPlays:0, badges:{} };
+
+  var ACTIVITIES = [];
+  function buildActivities(){
+    ACTIVITIES = [];
+    Object.keys(SUBJECTS).forEach(function(k){
+      SUBJECTS[k].lessons.forEach(function(l){
+        ACTIVITIES.push({ id:l.id, label:SUBJECTS[k].name + ': ' + l.title });
+      });
+    });
+    ACTIVITIES.push({ id:'pea',         label:"P.E.A: Let's Jump" });
+    ACTIVITIES.push({ id:'clap',        label:'Rhythms: Clap Along' });
+    ACTIVITIES.push({ id:'game-memory', label:'Game: Memory Match' });
+    ACTIVITIES.push({ id:'game-count',  label:'Game: Count to 5' });
+    Object.keys(LANG_PACKS).forEach(function(k){
+      LANG_PACKS[k].topics.forEach(function(t){
+        ACTIVITIES.push({ id:'pk-' + k + '-' + t.id, label:LANG_PACKS[k].displayName + ': ' + t.title });
+      });
+    });
+  }
+  buildActivities();
+
+  var BADGES = [
+    { id:'first',  emoji:'🌱', name:'First Steps',  desc:'Finish 1 activity',
+      test:function(){ return doneCount() >= 1; } },
+    { id:'five',   emoji:'📚', name:'Learner',      desc:'Finish 5 activities',
+      test:function(){ return doneCount() >= 5; } },
+    { id:'quiz',   emoji:'🏆', name:'Quiz Star',    desc:'Score full marks in the quiz',
+      test:function(){ return progress.quizTotal > 0 && progress.quizBest >= progress.quizTotal; } },
+    { id:'games',  emoji:'🎮', name:'Game Champ',   desc:'Win both games',
+      test:function(){ return progress.done['game-memory'] && progress.done['game-count']; } },
+    { id:'lang',   emoji:'🗣️', name:'Language Explorer', desc:'Finish a Shona or Ndebele topic',
+      test:function(){ return Object.keys(progress.done).some(function(k){ return k.indexOf('pk-') === 0 && progress.done[k]; }); } },
+    { id:'all',    emoji:'🌟', name:'All-Rounder',  desc:'Finish every activity',
+      test:function(){ return doneCount() >= ACTIVITIES.length; } }
+  ];
+
+  function doneCount(){
+    return ACTIVITIES.filter(function(a){ return progress.done[a.id]; }).length;
+  }
+  function blankProgress(){
+    return { done:{}, quizBest:0, quizTotal:0, quizPlays:0, badges:{} };
+  }
+  function loadProgress(){
+    progress = blankProgress();
+    try{
+      var s = localStorage.getItem(currentLearner().key);
+      if(s){ var p = JSON.parse(s); if(p && typeof p === 'object'){ progress = Object.assign(progress, p); } }
+    }catch(e){ /* storage unavailable: carry on */ }
+  }
+  function saveProgress(){
+    try{ localStorage.setItem(currentLearner().key, JSON.stringify(progress)); }catch(e){}
+  }
+
+  function checkBadges(){
+    var earnedNow = [];
+    BADGES.forEach(function(b){
+      if(!progress.badges[b.id] && b.test()){ progress.badges[b.id] = true; earnedNow.push(b); }
+    });
+    return earnedNow;
+  }
+
+  function announce(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+
+  function markDone(id){
+    var isNew = !progress.done[id];
+    progress.done[id] = true;
+    var badgesNow = checkBadges();
+    saveProgress();
+    if(badgesNow.length){
+      announce('🏅 New badge: ' + badgesNow[0].name + '!');
+    } else if(isNew){
+      announce('⭐ Star earned! Progress saved.');
+    }
+  }
+
+  function recordQuiz(score, total){
+    progress.quizPlays++;
+    if(progress.quizTotal !== total || score > progress.quizBest){
+      progress.quizBest = score; progress.quizTotal = total;
+    }
+    var badgesNow = checkBadges();
+    saveProgress();
+    if(badgesNow.length) announce('🏅 New badge: ' + badgesNow[0].name + '!');
+  }
+
+  function renderProgress(){
+    var n = doneCount(), total = ACTIVITIES.length;
+    document.getElementById('prog-sub').textContent = currentLearner().name + "'s stars, scores and badges";
+    document.getElementById('prog-stars').textContent = '⭐ ' + n + (n === 1 ? ' star' : ' stars');
+    document.getElementById('prog-fill').style.width = Math.round(100 * n / total) + '%';
+    document.getElementById('prog-count').textContent = n + ' of ' + total + ' activities completed';
+    document.getElementById('prog-quiz').textContent = progress.quizPlays
+      ? 'Best quiz score: ' + progress.quizBest + ' / ' + progress.quizTotal + '  ·  Played ' + progress.quizPlays + ' time' + (progress.quizPlays === 1 ? '' : 's')
+      : 'Best quiz score: not played yet';
+
+    var grid = document.getElementById('badge-grid');
+    grid.innerHTML = '';
+    BADGES.forEach(function(b){
+      var d = document.createElement('div');
+      d.className = 'badge' + (progress.badges[b.id] ? '' : ' locked');
+      d.innerHTML = '<div class="b-emoji">' + b.emoji + '</div><div class="b-name">' + b.name + '</div><div class="b-desc">' + b.desc + '</div>';
+      grid.appendChild(d);
+    });
+
+    var list = document.getElementById('prog-list');
+    list.innerHTML = '';
+    ACTIVITIES.forEach(function(a){
+      var r = document.createElement('div');
+      r.className = 'check-row';
+      r.innerHTML = '<span class="tick">' + (progress.done[a.id] ? '✅' : '⬜') + '</span><span>' + a.label + '</span>';
+      list.appendChild(r);
+    });
+    var rb = document.getElementById('reset-btn');
+    rb.textContent = 'Reset progress'; resetArmed = false;
+  }
+
+  var resetArmed = false;
+  function resetProgress(){
+    var rb = document.getElementById('reset-btn');
+    if(!resetArmed){
+      resetArmed = true;
+      rb.textContent = 'Tap again to erase all progress';
+      return;
+    }
+    progress = { done:{}, quizBest:0, quizTotal:0, quizPlays:0, badges:{} };
+    saveProgress();
+    renderProgress();
+  }
+  // ---- Learner profiles ----
+  // Each learner has their own saved progress. The first learner reuses the
+  // original progress record, so nothing already earned is lost.
+  var LEARNERS_KEY = 'ecdzim_learners_v1';
+  var learners = { list:[], current:null };
+
+  function saveLearners(){
+    try{ localStorage.setItem(LEARNERS_KEY, JSON.stringify(learners)); }catch(e){}
+  }
+  function currentLearner(){
+    return learners.list.filter(function(l){ return l.id === learners.current; })[0];
+  }
+  function loadLearners(){
+    try{
+      var s = localStorage.getItem(LEARNERS_KEY);
+      if(s){ var l = JSON.parse(s); if(l && Array.isArray(l.list) && l.list.length){ learners = l; } }
+    }catch(e){}
+    if(!learners.list.length){
+      learners = { list:[{ id:'l0', name:'Learner 1', key:PROGRESS_KEY }], current:'l0' };
+      saveLearners();
+    }
+    if(!currentLearner()){ learners.current = learners.list[0].id; saveLearners(); }
+  }
+  function countDone(p){ return ACTIVITIES.filter(function(a){ return p.done[a.id]; }).length; }
+  function countBadges(p){ return BADGES.filter(function(b){ return p.badges[b.id]; }).length; }
+  function readProgressFor(l){
+    if(l.id === learners.current) return progress;
+    var p = blankProgress();
+    try{
+      var s = localStorage.getItem(l.key);
+      if(s){ var q = JSON.parse(s); if(q && typeof q === 'object'){ p = Object.assign(p, q); } }
+    }catch(e){}
+    return p;
+  }
+  function updateWhoChip(){
+    document.getElementById('who-name').textContent = currentLearner().name;
+  }
+  // Clears on-screen "complete" states so the next learner starts fresh.
+  function resetLessonUI(){
+    document.querySelectorAll('.complete-banner').forEach(function(el){ el.classList.remove('show'); });
+    document.querySelectorAll('.option-btn').forEach(function(b){ b.classList.remove('correct','wrong'); b.disabled = false; });
+    resetJump(); resetClap();
+  }
+  function switchLearner(id){
+    learners.current = id;
+    saveLearners();
+    loadProgress();
+    resetLessonUI();
+    updateWhoChip();
+    backHome();
+    announce('👋 Hello, ' + currentLearner().name + '!');
+  }
+  function renderLearners(){
+    var wrap = document.getElementById('learner-list');
+    wrap.innerHTML = '';
+    learners.list.forEach(function(l){
+      var isCur = l.id === learners.current;
+      var b = document.createElement('button');
+      b.className = 'lang-chip';
+      var dot = document.createElement('span'); dot.className = 'lang-dot ' + (isCur ? 'active' : 'planned');
+      var info = document.createElement('span'); info.className = 'lang-info';
+      var nm = document.createElement('span'); nm.className = 'lang-name'; nm.textContent = l.name;
+      var st = document.createElement('span'); st.className = 'lang-status' + (isCur ? ' active' : ''); st.textContent = isCur ? 'Learning now' : 'Tap to switch';
+      info.appendChild(nm); info.appendChild(st);
+      b.appendChild(dot); b.appendChild(info);
+      b.onclick = function(){ switchLearner(l.id); };
+      wrap.appendChild(b);
+    });
+    document.getElementById('learner-error').textContent = '';
+    document.getElementById('learner-new').value = '';
+  }
+  function addLearner(){
+    var input = document.getElementById('learner-new');
+    var err = document.getElementById('learner-error');
+    var name = input.value.trim();
+    if(!name){ err.textContent = 'Please type a first name.'; return; }
+    if(learners.list.length >= 30){ err.textContent = 'This phone already has 30 learners.'; return; }
+    var dup = learners.list.some(function(l){ return l.name.toLowerCase() === name.toLowerCase(); });
+    if(dup){ err.textContent = 'That name is already used. Add a surname initial, e.g. "' + name + ' M".'; return; }
+    var id = 'l' + Date.now().toString(36) + Math.floor(Math.random()*1000).toString(36);
+    learners.list.push({ id:id, name:name, key:PROGRESS_KEY + '_' + id });
+    switchLearner(id);
+  }
+  function removeLearner(id){
+    var l = learners.list.filter(function(x){ return x.id === id; })[0];
+    if(!l || learners.list.length <= 1) return;
+    try{ localStorage.removeItem(l.key); }catch(e){}
+    learners.list = learners.list.filter(function(x){ return x.id !== id; });
+    if(learners.current === id){
+      learners.current = learners.list[0].id;
+      saveLearners();
+      loadProgress(); resetLessonUI();
+    } else {
+      saveLearners();
+    }
+    updateWhoChip();
+  }
+  function eraseAllData(){
+    learners.list.forEach(function(l){ try{ localStorage.removeItem(l.key); }catch(e){} });
+    try{ localStorage.removeItem(LEARNERS_KEY); }catch(e){}
+    learners = { list:[], current:null };
+    loadLearners();
+    loadProgress();
+    resetLessonUI();
+    updateWhoChip();
+  }
+  loadLearners();
+  loadProgress();
+  updateWhoChip();
+
+  // ---- Teacher area (Stage 1) ----
+  // This is a simple lock to keep young learners out. It is NOT secure
+  // account login: the PIN is stored only on this phone. Real teacher
+  // accounts need an online service and come in a later stage.
+  var TEACHER_KEY = 'ecdzim_teacher_v1';
+  var teacher = { pin:null, name:'', school:'' };
+
+  var TEACHER_RESOURCES = [
+    { title:'Using the app in class', text:'Let learners work in pairs on one phone. One child taps while the other says the answer aloud. Swap after each lesson.' },
+    { title:'English: alphabet and sounds', text:'Ask learners to find things in the classroom that start with the letter of the day. Say the sound together before they tap the sound button.' },
+    { title:'English: stories', text:'Read the story aloud first, then let learners retell it in their own words before answering the questions.' },
+    { title:'Mathematics: counting and adding', text:'Use real objects such as stones or bottle tops. Count aloud together, then let learners tap the answer.' },
+    { title:'Mathematics: shapes and patterns', text:'Go on a shape hunt around the classroom. Make clapping and stamping patterns for learners to copy.' },
+    { title:'Science: weather, plants and animals', text:'Take learners outside to look at the sky, plants and insects. Ask what they notice before opening the lesson.' },
+    { title:'Science: health and hygiene', text:'Practise hand washing with soap and clean water, and let learners teach the steps to each other.' },
+    { title:'Social Science: family, community and culture', text:'Invite learners to draw their family and tell the class one thing they enjoy doing together. Invite a community member to share a local story or song.' },
+    { title:'Social Science: safety and values', text:'Role-play crossing the road safely and acting kindly. Ask: what would you do?' },
+    { title:'P.E.A: movement, games and dance', text:'Clear a safe space first. Try mahumbwe and nhodo with learners, and let them show dances they know from home.' },
+    { title:'P.E.A: arts and music', text:'Let learners mix colours with paint, shape clay or weave with grass. Play a beat on a drum or a tin and let them clap along.' },
+    { title:'Shona and Ndebele words', text:'Invite a fluent speaker, such as a teacher, parent or community member, to say each word aloud so learners hear the correct pronunciation. Recorded audio will be added later.' }
+  ];
+
+  function loadTeacher(){
+    try{
+      var s = localStorage.getItem(TEACHER_KEY);
+      if(s){ var t = JSON.parse(s); if(t && t.pin){ teacher = Object.assign(teacher, t); } }
+    }catch(e){}
+  }
+  function saveTeacher(){
+    try{ localStorage.setItem(TEACHER_KEY, JSON.stringify(teacher)); }catch(e){}
+  }
+  function hashPin(p){
+    var h = 5381, s = 'ecdzim:' + p;
+    for(var i=0;i<s.length;i++){ h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; }
+    return String(h);
+  }
+  function showTeacherView(v){
+    ['t-setup','t-lock','t-dash'].forEach(function(id){
+      document.getElementById(id).style.display = (id === v) ? 'block' : 'none';
+    });
+  }
+  function initTeacher(){
+    forgotArmed = false;
+    document.getElementById('t-forgot').textContent = 'Forgot PIN?';
+    document.getElementById('t-pin-enter').value = '';
+    document.getElementById('t-lock-error').textContent = '';
+    if(teacher.pin){ showTeacherView('t-lock'); } else { openTeacherSetup(false); }
+  }
+  function openTeacherSetup(editing){
+    document.getElementById('t-setup-title').textContent = editing ? 'Edit profile & PIN' : 'Create teacher profile';
+    document.getElementById('t-name').value = editing ? teacher.name : '';
+    document.getElementById('t-school').value = editing ? teacher.school : '';
+    document.getElementById('t-pin-new').value = '';
+    document.getElementById('t-setup-error').textContent = '';
+    showTeacherView('t-setup');
+  }
+  function saveTeacherProfile(){
+    var name = document.getElementById('t-name').value.trim();
+    var school = document.getElementById('t-school').value.trim();
+    var pin = document.getElementById('t-pin-new').value;
+    var err = document.getElementById('t-setup-error');
+    if(!name){ err.textContent = 'Please enter your name.'; return; }
+    if(!/^\d{4}$/.test(pin)){ err.textContent = 'PIN must be exactly 4 digits.'; return; }
+    teacher = { pin: hashPin(pin), name: name, school: school };
+    saveTeacher();
+    renderTeacherDash();
+    showTeacherView('t-dash');
+  }
+  function unlockTeacher(){
+    var pin = document.getElementById('t-pin-enter').value;
+    if(hashPin(pin) === teacher.pin){
+      document.getElementById('t-pin-enter').value = '';
+      renderTeacherDash();
+      showTeacherView('t-dash');
+    } else {
+      document.getElementById('t-lock-error').textContent = 'Wrong PIN. Please try again.';
+      document.getElementById('t-pin-enter').value = '';
+    }
+  }
+  function lockTeacher(){
+    initTeacher();
+  }
+  var forgotArmed = false;
+  function forgotPin(){
+    var b = document.getElementById('t-forgot');
+    if(!forgotArmed){
+      forgotArmed = true;
+      b.textContent = 'Tap again to erase the teacher profile and all saved progress';
+      return;
+    }
+    forgotArmed = false;
+    teacher = { pin:null, name:'', school:'' };
+    saveTeacher();
+    eraseAllData();
+    contentHidden = {};
+    saveContent();
+    applyContent();
+    b.textContent = 'Forgot PIN?';
+    openTeacherSetup(false);
+  }
+
+  function renderTeacherDash(){
+    document.getElementById('t-welcome').textContent = 'Welcome, ' + teacher.name;
+    document.getElementById('t-school-line').textContent = teacher.school;
+    document.getElementById('t-count-line').textContent =
+      learners.list.length + (learners.list.length === 1 ? ' learner' : ' learners') + ' on this phone';
+
+    var list = document.getElementById('t-class-list');
+    list.innerHTML = '';
+    learners.list.forEach(function(l){
+      var p = readProgressFor(l);
+      var d = document.createElement('details'); d.className = 'res';
+      var s = document.createElement('summary');
+      s.textContent = l.name + ' — ' + countDone(p) + '/' + ACTIVITIES.length + ' activities · Quiz ' +
+        (p.quizPlays ? (p.quizBest + '/' + p.quizTotal) : '–') + ' · ' + countBadges(p) + ' badges';
+      d.appendChild(s);
+      ACTIVITIES.forEach(function(a){
+        var r = document.createElement('div'); r.className = 'check-row';
+        var tick = document.createElement('span'); tick.className = 'tick'; tick.textContent = p.done[a.id] ? '✅' : '⬜';
+        var lab = document.createElement('span'); lab.textContent = a.label;
+        r.appendChild(tick); r.appendChild(lab); d.appendChild(r);
+      });
+      if(learners.list.length > 1){
+        var rm = document.createElement('button'); rm.className = 'reset-btn'; rm.textContent = 'Remove ' + l.name;
+        var armed = false;
+        rm.onclick = function(){
+          if(!armed){ armed = true; rm.textContent = 'Tap again to erase ' + l.name + "'s progress"; return; }
+          removeLearner(l.id);
+          renderTeacherDash();
+        };
+        d.appendChild(rm);
+      }
+      list.appendChild(d);
+    });
+
+    renderContentToggles();
+
+    var res = document.getElementById('t-resources');
+    res.innerHTML = '';
+    TEACHER_RESOURCES.forEach(function(item){
+      var d = document.createElement('details'); d.className = 'res';
+      var s = document.createElement('summary'); s.textContent = item.title;
+      var p = document.createElement('p'); p.textContent = item.text;
+      d.appendChild(s); d.appendChild(p);
+      res.appendChild(d);
+    });
+  }
+  // ---- Content selection ----
+  // The teacher chooses what learners see on the Home screen. Saved on this phone.
+  var CONTENT_KEY = 'ecdzim_content_v1';
+  var contentHidden = {};
+  var CONTENT_ITEMS = [
+    { id:'english',  label:'English Language',        sel:'.card-english' },
+    { id:'maths',    label:'Mathematics',             sel:'.card-maths' },
+    { id:'science',  label:'Science & Technology',    sel:'.card-science' },
+    { id:'social',   label:'Social Science',          sel:'.card-social' },
+    { id:'pea',      label:'P.E.A',                   sel:'.card-pea' },
+    { id:'lang',     label:'Indigenous Languages',    sel:'.card-lang' },
+    { id:'games',    label:'Games',                   sel:'.btn-games' },
+    { id:'rhythms',  label:'Rhythms & Songs',         sel:'.btn-rhythms' },
+    { id:'quiz',     label:'Quiz',                    sel:'.btn-quiz' }
+  ];
+  function loadContent(){
+    try{
+      var s = localStorage.getItem(CONTENT_KEY);
+      if(s){ var o = JSON.parse(s); if(o && typeof o === 'object'){ contentHidden = o; } }
+    }catch(e){}
+  }
+  function saveContent(){
+    try{ localStorage.setItem(CONTENT_KEY, JSON.stringify(contentHidden)); }catch(e){}
+  }
+  function applyContent(){
+    CONTENT_ITEMS.forEach(function(it){
+      var el = document.querySelector(it.sel);
+      if(el) el.style.display = contentHidden[it.id] ? 'none' : '';
+    });
+    function anyShown(ids){ return ids.some(function(id){ return !contentHidden[id]; }); }
+    document.getElementById('areas-label').style.display =
+      anyShown(['english','maths','science','social','pea','lang']) ? '' : 'none';
+    document.getElementById('play-label').style.display =
+      anyShown(['games','rhythms','quiz']) ? '' : 'none';
+  }
+  function toggleContent(id){
+    var willHide = !contentHidden[id];
+    if(willHide){
+      var visible = CONTENT_ITEMS.filter(function(i){ return !contentHidden[i.id]; }).length;
+      if(visible <= 1){ announce('Keep at least one item visible.'); return; }
+      contentHidden[id] = true;
+    } else {
+      delete contentHidden[id];
+    }
+    saveContent();
+    applyContent();
+    renderContentToggles();
+  }
+  function renderContentToggles(){
+    var wrap = document.getElementById('t-content-list');
+    wrap.innerHTML = '';
+    CONTENT_ITEMS.forEach(function(it){
+      var hidden = !!contentHidden[it.id];
+      var b = document.createElement('button');
+      b.className = 'toggle-row' + (hidden ? ' off' : '');
+      var ic = document.createElement('span'); ic.textContent = hidden ? '🚫' : '✅';
+      var lb = document.createElement('span'); lb.textContent = it.label;
+      var st = document.createElement('span'); st.className = 'tstate'; st.textContent = hidden ? 'Hidden' : 'Shown';
+      b.appendChild(ic); b.appendChild(lb); b.appendChild(st);
+      b.onclick = function(){ toggleContent(it.id); };
+      wrap.appendChild(b);
+    });
+  }
+  loadContent();
+  applyContent();
+  loadTeacher();
+
+  var jumpTally = 0;
+  function resetJump(){
+    jumpTally = 0;
+    document.getElementById('jump-count').textContent = 'Jumps: 0 / 3';
+    document.getElementById('jump-btn').disabled = false;
+    document.getElementById('pea-complete').classList.remove('show');
+  }
+  function doJump(){
+    if(jumpTally >= 3) return;
+    jumpTally++;
+    document.getElementById('jump-count').textContent = 'Jumps: ' + jumpTally + ' / 3';
+    if(jumpTally === 3){
+      document.getElementById('jump-btn').disabled = true;
+      document.getElementById('pea-complete').classList.add('show');
+      markDone('pea');
+    }
+  }
+</script>
+
+<script>
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+  }
+</script>
+</body>
+</html>
