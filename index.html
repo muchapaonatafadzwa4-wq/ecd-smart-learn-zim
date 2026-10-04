@@ -565,4 +565,463 @@
     </div>
     <div class="complete-banner" id="clap-complete">⭐ Great rhythm!</div>
 
-    <div class="section-label">Action Rhyme</div>
+    <div class="section-label">Action Rhyme</div><div class="lesson-card">
+      <div class="rhyme-lines">Clap your hands, clap your hands,<br>Stomp your feet, stomp your feet,<br>Turn around, turn around,<br>Sit down, sit down!</div>
+      <div class="rhyme-icons">👏 🦶 🔄 🪑</div>
+      <button class="speak-btn" onclick="speak('Clap your hands, clap your hands. Stomp your feet, stomp your feet. Turn around, turn around. Sit down, sit down!')">🔊 Play rhyme</button>
+      <div class="source-note">Original rhyme written for ECD Smart-Learn Zim</div>
+    </div>
+  </div>
+
+  <div id="progress-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">My Progress<small id="prog-sub">Stars, scores and badges</small></div>
+    </div>
+
+    <div class="lesson-card">
+      <div class="prog-big" id="prog-stars">⭐ 0 stars</div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="source-note" id="prog-count">0 of 10 activities completed</div>
+      <div class="source-note" id="prog-quiz">Best quiz score: not played yet</div>
+    </div>
+
+    <div class="section-label">Badges</div>
+    <div class="badge-grid" id="badge-grid"></div>
+
+    <div class="section-label">Activities</div>
+    <div id="prog-list"></div>
+
+    <button class="reset-btn" id="reset-btn" onclick="resetProgress()">Reset progress</button>
+  </div>
+
+  <div id="teacher-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Teacher Area<small>Profile, progress and ideas</small></div>
+    </div>
+
+    <div id="t-setup" style="display:none;">
+      <div class="lesson-card">
+        <div class="big-emoji" style="font-size:44px;">🧑🏽‍🏫</div>
+        <div class="lesson-sentence" id="t-setup-title">Create teacher profile</div>
+        <div class="source-note">The PIN keeps this area away from learners. It is saved only on this phone.</div>
+      </div>
+      <label class="t-label" for="t-name">Your name</label>
+      <input id="t-name" class="t-input" type="text" maxlength="40" placeholder="e.g. Mrs Moyo" autocomplete="off">
+      <label class="t-label" for="t-school">School (optional)</label>
+      <input id="t-school" class="t-input" type="text" maxlength="60" placeholder="School name" autocomplete="off">
+      <label class="t-label" for="t-pin-new">Choose a 4-digit PIN</label>
+      <input id="t-pin-new" class="t-input" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+      <div class="t-error" id="t-setup-error"></div>
+      <button class="t-btn" onclick="saveTeacherProfile()">Save</button>
+    </div>
+
+    <div id="t-lock" style="display:none;">
+      <div class="lesson-card">
+        <div class="big-emoji" style="font-size:44px;">🔒</div>
+        <div class="lesson-sentence">Enter teacher PIN</div>
+      </div>
+      <input id="t-pin-enter" class="t-input" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+      <div class="t-error" id="t-lock-error"></div>
+      <button class="t-btn" onclick="unlockTeacher()">Unlock</button>
+      <button class="t-link" id="t-forgot" onclick="forgotPin()">Forgot PIN?</button>
+    </div>
+
+    <div id="t-dash" style="display:none;">
+      <div class="lesson-card">
+        <div class="lesson-sentence" id="t-welcome">Welcome</div>
+        <div class="source-note" id="t-school-line"></div>
+        <div class="source-note" id="t-count-line"></div>
+      </div>
+
+      <div class="section-label">Class overview</div>
+      <div id="t-class-list"></div>
+      <div class="source-note">Tap a learner to see each activity. Progress is stored on this phone only.</div>
+
+      <div class="section-label">Content for learners</div>
+      <div id="t-content-list"></div>
+      <div class="source-note">Tap an item to show or hide it on the learners' home screen.</div>
+
+      <div class="section-label">Classroom ideas</div>
+      <div id="t-resources"></div>
+      <div class="source-note">Suggested classroom ideas written for this app. They are not official curriculum guidance.</div>
+
+      <button class="t-btn soft" onclick="openTeacherSetup(true)">Edit profile &amp; PIN</button>
+      <button class="t-btn" onclick="lockTeacher()">🔒 Lock teacher area</button>
+    </div>
+  </div>
+
+  <div id="learner-screen" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Who is learning?<small>Each learner keeps their own progress</small></div>
+    </div>
+    <div class="lang-list" id="learner-list"></div>
+    <label class="t-label" for="learner-new">Add a new learner</label>
+    <input id="learner-new" class="t-input" type="text" maxlength="20" placeholder="First name" autocomplete="off">
+    <div class="t-error" id="learner-error"></div>
+    <button class="t-btn" onclick="addLearner()">Add learner</button>
+  </div>
+
+  <div id="lang-select" class="lesson-screen">
+    <div class="lesson-topbar">
+      <button class="back-btn" aria-label="Back to home" onclick="backHome()">←</button>
+      <div class="lesson-title">Select Language<small>Indigenous Languages</small></div>
+    </div>
+    <div class="lang-list" id="lang-list"></div>
+  </div>
+
+  <div id="toast"></div>
+
+<script>
+  function goHome(){
+    var s = document.getElementById('splash');
+    s.classList.add('hide');
+    setTimeout(function(){
+      s.style.display = 'none';
+      document.getElementById('home').classList.add('show');
+    }, 550);
+  }
+  // auto-advance after 2.2s even without a tap
+  setTimeout(goHome, 2200);
+
+  var toastTimer;
+  function notReady(name){
+    var t = document.getElementById('toast');
+    t.textContent = name + ' — coming in a later phase!';
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1600);
+  }
+
+  // ---- Language pack registry ----
+  // Adding a new officially-recognised language later = adding one line here.
+  // No other app code needs to change.
+  var LANGUAGES = [
+    { name:'Shona',        status:'active',  note:'Greetings, numbers, animals, family', packKey:'shona' },
+    { name:'Ndebele',      status:'active',  note:'Greetings, numbers, animals, family', packKey:'ndebele' },
+    { name:'Xhosa',        status:'active',  note:'Greetings and numbers', packKey:'xhosa' },
+    { name:'Sotho',        status:'active',  note:'Greetings and numbers', packKey:'sotho' },
+    { name:'Tswana',       status:'active',  note:'Greetings and numbers', packKey:'tswana' },
+    { name:'Venda',        status:'active',  note:'Greetings and numbers', packKey:'venda' },
+    { name:'Chewa',        status:'active',  note:'Greetings only', packKey:'chewa' },
+    { name:'Kalanga',      status:'active',  note:'Greetings only', packKey:'kalanga' },
+    { name:'Chibarwe',     status:'active',  note:'Unverified — single source', packKey:'chibarwe' },
+    { name:'Tonga',        status:'planned', note:'No reliable source found yet' },
+    { name:'Ndau',         status:'planned', note:'No reliable source found yet' },
+    { name:'Shangani',     status:'planned', note:'No reliable source found yet' },
+    { name:'Nambya',       status:'planned', note:'No reliable source found yet' },
+    { name:'Koisan (Tshwao)', status:'planned', note:'Critically endangered — see note below' },
+    { name:'Sign Language',status:'planned', note:'Planned — video format' }
+  ];
+
+  function renderLanguages(){
+    var wrap = document.getElementById('lang-list');
+    wrap.innerHTML = '';
+    LANGUAGES.forEach(function(l){
+      var btn = document.createElement('button');
+      btn.className = 'lang-chip';
+      if(l.status === 'active' && l.packKey){
+        btn.onclick = function(){ openLangHub(l.packKey); };
+      } else {
+        btn.onclick = function(){ notReady(l.name + ' language pack'); };
+      }
+      btn.innerHTML =
+        '<span class="lang-dot ' + l.status + '"></span>' +
+        '<span class="lang-info">' +
+          '<span class="lang-name">' + l.name + '</span>' +
+          '<span class="lang-status ' + l.status + '">' + l.note + '</span>' +
+        '</span>';
+      wrap.appendChild(btn);
+    });
+  }
+  renderLanguages();
+
+  function hideAllScreens(){
+    document.getElementById('home').classList.remove('show');
+    document.querySelectorAll('.lesson-screen.show').forEach(function(el){ el.classList.remove('show'); });
+  }
+  // ============================================================
+  // LESSON CONTENT
+  // Supplementary ECD to Grade 2 content written for this app.
+  // The six learning areas match Zimbabwe's Heritage-Based Curriculum
+  // (2024-2030), but the individual topics below are NOT copied from
+  // the official syllabi and have not been checked by the Ministry.
+  // Adding a lesson = adding one L(...) line to a subject below.
+  // ============================================================
+  function C(emoji, big, text){ return { emoji:emoji, big:big, text:text }; }
+  function Q(emoji, q, options, answer){ return { emoji:emoji, q:q, options:options, answer:answer }; }
+  function L(id, title, emoji, cards, questions, group){
+    return { id:id, title:title, emoji:emoji, cards:cards, questions:questions, group:group || '' };
+  }
+  var TF = ['True','False'];
+
+  var SUBJECTS = {
+
+    english: { name:'English Language', emoji:'🔤', lessons:[
+      L('en','Letters A to E','🍎',[
+        C('🍎','A a','A is for Apple.'), C('⚽','B b','B is for Ball.'), C('🐱','C c','C is for Cat.'),
+        C('🐕','D d','D is for Dog.'), C('🥚','E e','E is for Egg.')],[
+        Q('🍎','Which word starts with A?',['Ball','Apple','Dog'],'Apple'),
+        Q('🐕','What letter does Dog start with?',['B','D','E'],'D'),
+        Q('🥚','Which word starts with E?',['Egg','Cat','Ball'],'Egg'),
+        Q('⚽','What letter does Ball start with?',['B','A','C'],'B')],'Alphabet'),
+      L('en2','Letters F to J','🐟',[
+        C('🐟','F f','F is for Fish.'), C('🐐','G g','G is for Goat.'), C('👒','H h','H is for Hat.'),
+        C('🐞','I i','I is for Insect.'), C('🥤','J j','J is for Juice.')],[
+        Q('🐐','Which word starts with G?',['Goat','Fish','Hat'],'Goat'),
+        Q('🐟','What letter does Fish start with?',['F','G','J'],'F'),
+        Q('👒','Which word starts with H?',['Juice','Hat','Insect'],'Hat'),
+        Q('🥤','What letter does Juice start with?',['I','H','J'],'J')],'Alphabet'),
+      L('en3','Letters K to O','🦁',[
+        C('🔑','K k','K is for Key.'), C('🦁','L l','L is for Lion.'), C('🥭','M m','M is for Mango.'),
+        C('👃','N n','N is for Nose.'), C('🍊','O o','O is for Orange.')],[
+        Q('🦁','Which word starts with L?',['Nose','Lion','Key'],'Lion'),
+        Q('🥭','What letter does Mango start with?',['M','N','L'],'M'),
+        Q('🍊','Which word starts with O?',['Orange','Mango','Key'],'Orange'),
+        Q('👃','What letter does Nose start with?',['M','O','N'],'N')],'Alphabet'),
+      L('en4','Letters P to T','🐷',[
+        C('🐷','P p','P is for Pig.'), C('👸','Q q','Q is for Queen.'), C('🐰','R r','R is for Rabbit.'),
+        C('☀️','S s','S is for Sun.'), C('🌳','T t','T is for Tree.')],[
+        Q('🐰','Which word starts with R?',['Rabbit','Sun','Pig'],'Rabbit'),
+        Q('🌳','What letter does Tree start with?',['S','T','R'],'T'),
+        Q('🐷','Which word starts with P?',['Queen','Tree','Pig'],'Pig'),
+        Q('☀️','What letter does Sun start with?',['S','P','Q'],'S')],'Alphabet'),
+      L('en5','Letters U to Z','🦓',[
+        C('☂️','U u','U is for Umbrella.'), C('🎻','V v','V is for Violin.'), C('💧','W w','W is for Water.'),
+        C('🎵','X x','X is for Xylophone.'), C('🍠','Y y','Y is for Yam.'), C('🦓','Z z','Z is for Zebra.')],[
+        Q('🦓','Which word starts with Z?',['Zebra','Yam','Water'],'Zebra'),
+        Q('💧','What letter does Water start with?',['V','W','U'],'W'),
+        Q('☂️','Which word starts with U?',['Umbrella','Violin','Yam'],'Umbrella'),
+        Q('🍠','What letter does Yam start with?',['X','Y','Z'],'Y')],'Alphabet'),
+      L('en6','First sounds','🔊',[
+        C('☀️','s','The letter s says "sss", like sun.'), C('🌙','m','The letter m says "mmm", like moon.'),
+        C('🐱','c','The letter c says "k", like cat.'), C('🐟','f','The letter f says "fff", like fish.')],[
+        Q('🌙','Which letter does moon start with?',['m','s','f'],'m'),
+        Q('🐟','Which letter does fish start with?',['c','f','m'],'f'),
+        Q('☀️','Which letter does sun start with?',['s','c','m'],'s'),
+        Q('🐱','Which letter does cat start with?',['c','f','s'],'c')],'Sounds and words'),
+      L('en7','Colour words','🎨',[
+        C('🍎','red','The apple is red.'), C('🌊','blue','The sea is blue.'),
+        C('🍃','green','The leaf is green.'), C('🌻','yellow','The sunflower is yellow.')],[
+        Q('🍃','What colour is a leaf?',['green','red','blue'],'green'),
+        Q('🍎','What colour is this apple?',['blue','red','yellow'],'red'),
+        Q('🌻','What colour is a sunflower?',['yellow','blue','green'],'yellow'),
+        Q('🌊','What colour is the sea?',['red','green','blue'],'blue')],'Sounds and words'),
+      L('en8','Reading short sentences','📖',[
+        C('🐱','I see a cat.','I see a cat.'), C('🐕','The dog can run.','The dog can run.'),
+        C('☀️','The sun is hot.','The sun is hot.'), C('📖','I can read.','I can read.')],[
+        Q('🐕','The dog can ___.',['run','sun','cat'],'run'),
+        Q('☀️','The sun is ___.',['hot','cat','read'],'hot'),
+        Q('🐱','I see a ___.',['cat','run','hot'],'cat'),
+        Q('📖','I can ___.',['read','hot','cat'],'read')],'Sounds and words'),
+      L('en9','Story: The Mango Tree','🥭',[
+        C('🌳','','Tendai has a big mango tree near his home.'),
+        C('🥭','','One morning, the mangoes are ripe and sweet.'),
+        C('👧','','Tendai sees his friend Rudo. Rudo has no mango.'),
+        C('🤝','','Tendai shares his mango with Rudo. They both smile.'),
+        C('😊','','Sharing makes friends happy!')],[
+        Q('🥭','What fruit is in the story?',['Mango','Banana','Orange'],'Mango'),
+        Q('👧','Who did Tendai share with?',['Rudo','Nobody','A monkey'],'Rudo'),
+        Q('🤝','What did Tendai do?',['He shared his mango','He ate it all','He threw it away'],'He shared his mango'),
+        Q('😊','What can we learn?',['Sharing makes friends happy','Never talk to friends','Mangoes are red'],'Sharing makes friends happy')],'Stories (original)')
+    ]},
+
+    maths: { name:'Mathematics', emoji:'🔢', lessons:[
+      L('math','Counting 1 to 5','🍎',[
+        C('🍎','1','One apple.'), C('🍎🍎','2','Two apples.'), C('🍎🍎🍎','3','Three apples.'),
+        C('🍎🍎🍎🍎','4','Four apples.'), C('🍎🍎🍎🍎🍎','5','Five apples.')],[
+        Q('🍎🍎🍎','How many apples?',['2','3','4'],'3'),
+        Q('🍎🍎🍎🍎🍎','How many apples?',['5','4','3'],'5'),
+        Q('🍎','How many apples?',['1','2','3'],'1'),
+        Q('🍎🍎🍎🍎','How many apples?',['3','4','5'],'4')],'Numbers'),
+      L('math2','Counting 6 to 10','⭐',[
+        C('⭐⭐⭐⭐⭐⭐','6','Six stars.'), C('⭐⭐⭐⭐⭐⭐⭐','7','Seven stars.'),
+        C('⭐⭐⭐⭐⭐⭐⭐⭐','8','Eight stars.'), C('⭐⭐⭐⭐⭐⭐⭐⭐⭐','9','Nine stars.'),
+        C('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐','10','Ten stars.')],[
+        Q('⭐⭐⭐⭐⭐⭐⭐','How many stars?',['6','7','8'],'7'),
+        Q('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐','How many stars?',['9','10','8'],'10'),
+        Q('⭐⭐⭐⭐⭐⭐','How many stars?',['6','5','7'],'6'),
+        Q('⭐⭐⭐⭐⭐⭐⭐⭐','How many stars?',['7','9','8'],'8')],'Numbers'),
+      L('math3','Numbers in order','🔢',[
+        C('🔢','1 2 3 4 5','Count in order: one, two, three, four, five.'),
+        C('🔢','6 7 8 9 10','Keep counting: six, seven, eight, nine, ten.'),
+        C('➡️','After 4 comes 5','The number after 4 is 5.'),
+        C('⬅️','Before 3 comes 2','The number before 3 is 2.')],[
+        Q('➡️','What comes after 4?',['3','5','6'],'5'),
+        Q('➡️','What comes after 7?',['8','6','9'],'8'),
+        Q('⬅️','What comes before 3?',['4','2','1'],'2'),
+        Q('❓','Which number is missing? 1, 2, __, 4',['3','5','2'],'3'),
+        Q('⚖️','Which number is bigger?',['6','9'],'9')],'Numbers'),
+      L('math4','Big, small, long, short, heavy, light','📏',[
+        C('🐘','Big and small','The elephant is big. The mouse is small.'),
+        C('🐍','Long and short','The snake is long. The caterpillar is short.'),
+        C('🧱','Heavy and light','A brick is heavy. A balloon is light.'),
+        C('🍎🍎🍎','More and fewer','Three apples are more than one apple.')],[
+        Q('🐘','Which one is big?',['Mouse','Elephant'],'Elephant'),
+        Q('🎈','Which one is light?',['Brick','Balloon'],'Balloon'),
+        Q('🐍','Which one is long?',['Snake','Caterpillar'],'Snake'),
+        Q('🍎','Which has more?',['3 apples','1 apple'],'3 apples')],'Shapes and measures'),
+      L('math5','Shapes','🔺',[
+        C('⭕','Circle','A circle is round. A ball is round.'),
+        C('🟦','Square','A square has 4 sides that are the same length.'),
+        C('🔺','Triangle','A triangle has 3 sides.'),
+        C('▬','Rectangle','A rectangle has 4 sides. A book is a rectangle.')],[
+        Q('🔺','What shape is this?',['Circle','Triangle','Square'],'Triangle'),
+        Q('⭕','What shape is this?',['Square','Triangle','Circle'],'Circle'),
+        Q('🟦','What shape is this?',['Square','Triangle','Circle'],'Square'),
+        Q('🔺','How many sides does a triangle have?',['3','4','5'],'3')],'Shapes and measures'),
+      L('math6','Adding','➕',[
+        C('🍎 + 🍎','1 + 1 = 2','One apple and one apple make two apples.'),
+        C('🍎🍎 + 🍎','2 + 1 = 3','Two apples and one apple make three apples.'),
+        C('🍎🍎 + 🍎🍎','2 + 2 = 4','Two apples and two apples make four apples.'),
+        C('🍎🍎🍎 + 🍎🍎','3 + 2 = 5','Three apples and two apples make five apples.')],[
+        Q('🐟🐟 + 🐟','2 + 1 = ?',['3','2','4'],'3'),
+        Q('🍎🍎 + 🍎🍎','2 + 2 = ?',['3','4','5'],'4'),
+        Q('⭐ + ⭐⭐⭐','1 + 3 = ?',['3','4','5'],'4'),
+        Q('🍌🍌🍌 + 🍌🍌','3 + 2 = ?',['4','6','5'],'5')],'Adding and taking away'),
+      L('math7','Taking away','➖',[
+        C('🐟🐟🐟','3 − 1 = 2','Three fish. One swims away. Two fish are left.'),
+        C('🍎🍎🍎🍎','4 − 2 = 2','Four apples. We eat two. Two apples are left.'),
+        C('🐦🐦🐦🐦🐦','5 − 3 = 2','Five birds. Three fly away. Two birds are left.')],[
+        Q('🐦🐦🐦🐦🐦','5 birds. 2 fly away. How many are left?',['3','2','4'],'3'),
+        Q('🍎🍎🍎🍎','4 apples. We eat 1. How many are left?',['3','2','4'],'3'),
+        Q('🐟🐟🐟','3 − 3 = ?',['0','1','3'],'0'),
+        Q('⭐⭐','2 − 1 = ?',['1','2','3'],'1')],'Adding and taking away'),
+      L('math8','Patterns','🔴',[
+        C('🔴🔵🔴🔵','Pattern','Red, blue, red, blue. The pattern repeats!'),
+        C('🌞🌙🌞🌙','Day and night','Sun, moon, sun, moon. This is a pattern too.'),
+        C('👏👏🦶','Sound pattern','Clap, clap, stamp. Clap, clap, stamp.')],[
+        Q('🔴🔵🔴🔵🔴','What comes next?',['🔴','🔵'],'🔵'),
+        Q('🟢🟢🟡🟢🟢','What comes next?',['🟡','🟢'],'🟡'),
+        Q('🌞🌙🌞🌙','What comes next?',['🌞','🌙'],'🌞'),
+        Q('⭐🌙⭐🌙⭐','What comes next?',['🌙','⭐'],'🌙')],'Patterns')
+    ]},
+
+    science: { name:'Science and Technology', emoji:'🌱', lessons:[
+      L('sci','Weather','☀️',[
+        C('☀️','Sunny','On a sunny day the sun shines and it is warm.'),
+        C('🌧️','Rainy','Rain falls from clouds. Rain gives plants and animals water.'),
+        C('☁️','Cloudy','On a cloudy day, clouds cover the sky.'),
+        C('💨','Windy','On a windy day, the wind moves the leaves.')],[
+        Q('🌧️','Which weather has rain?',['Sunny','Rainy','Windy'],'Rainy'),
+        Q('☀️','When does the sun shine brightly?',['Sunny','Cloudy'],'Sunny'),
+        Q('☂️','When do we use an umbrella?',['When it rains','When we sleep','When we eat'],'When it rains'),
+        Q('☁️','True or False: Rain falls from clouds.',TF,'True')],'Nature'),
+      L('sci2','Animals','🐄',[
+        C('🐄','Cow','A cow is a farm animal. It gives us milk.'),
+        C('🐔','Hen','A hen is a farm bird. It lays eggs.'),
+        C('🐐','Goat','A goat is a farm animal. It eats grass and leaves.'),
+        C('🐘','Elephant','An elephant is a big wild animal. Wild animals live in the bush.'),
+        C('🦁','Lion','A lion is a wild animal. Stay far away from wild animals.')],[
+        Q('🐄','Which animal gives us milk?',['Cow','Lion','Hen'],'Cow'),
+        Q('🥚','Which animal lays eggs?',['Goat','Hen','Elephant'],'Hen'),
+        Q('🦁','Which animal is wild?',['Cow','Goat','Lion'],'Lion'),
+        Q('🐐','True or False: A goat is a farm animal.',TF,'True')],'Nature'),
+      L('sci3','Plants','🌱',[
+        C('🌱','Plants grow','Plants grow from seeds.'),
+        C('💧','Water','Plants need water to grow.'),
+        C('☀️','Sunlight','Plants need sunlight to grow.'),
+        C('🌽','Maize','Maize is a plant. Maize meal is used to make sadza.'),
+        C('🌿','Parts of a plant','A plant has roots, a stem and leaves.')],[
+        Q('🌱','What do plants need to grow?',['Water and sunlight','Plastic','Stones'],'Water and sunlight'),
+        Q('🌱','Plants grow from...',['Seeds','Stones','Sand'],'Seeds'),
+        Q('🌽','What do we make from maize meal?',['Sadza','Bricks','Shoes'],'Sadza'),
+        Q('🌿','True or False: A plant has leaves.',TF,'True')],'Nature'),
+      L('sci4','My body and senses','👀',[
+        C('👀','Eyes','We see with our eyes.'), C('👂','Ears','We hear with our ears.'),
+        C('👃','Nose','We smell with our nose.'), C('👅','Tongue','We taste with our tongue.'),
+        C('✋','Hands','We touch with our hands.')],[
+        Q('👂','What do we use to hear?',['Eyes','Ears','Nose'],'Ears'),
+        Q('👃','We smell with our...',['Nose','Hands','Tongue'],'Nose'),
+        Q('👅','We taste with our...',['Ears','Eyes','Tongue'],'Tongue'),
+        Q('👀','We see with our...',['Eyes','Ears','Hands'],'Eyes')],'Me and my health'),
+      L('sci5','Health and hygiene','🧼',[
+        C('🧼','Wash your hands','Wash your hands with soap and clean water. Do it before you eat and after using the toilet.'),
+        C('🪥','Brush your teeth','Brush your teeth every day to keep them clean.'),
+        C('💧','Clean water','Drink clean, safe water.'),
+        C('🍎','Healthy food','Eat fruit, vegetables and other healthy foods.')],[
+        Q('🧼','When should we wash our hands?',['Before eating','Never','Only on Sundays'],'Before eating'),
+        Q('🧼','What do we use to wash our hands?',['Soap and water','Sand','Milk'],'Soap and water'),
+        Q('🪥','True or False: We should brush our teeth every day.',TF,'True'),
+        Q('🍎','Which is a healthy food?',['Fruit','Too many sweets'],'Fruit')],'Me and my health'),
+      L('sci6','Water','💧',[
+        C('💧','Water is important','People, animals and plants all need water.'),
+        C('🚰','Clean water','Clean water is safe to drink. Ask a grown-up if you are not sure.'),
+        C('♨️','Boiling water','If water may be dirty, a grown-up can boil it to make it safer. Never touch hot water.'),
+        C('🚿','Do not waste water','Turn off the tap when you are finished.')],[
+        Q('💧','Who needs water?',['People, animals and plants','Only people','No one'],'People, animals and plants'),
+        Q('🚿','Should we waste water?',['No','Yes'],'No'),
+        Q('♨️','Who should boil water?',['A grown-up','A baby'],'A grown-up'),
+        Q('🚰','True or False: Dirty water can make us sick.',TF,'True')],'Nature'),
+      L('sci7','Materials','🧱',[
+        C('🪵','Wood','Wood comes from trees. We make chairs and tables from wood.'),
+        C('🔩','Metal','Metal is strong. Pots and nails are made of metal.'),
+        C('🥛','Glass','Glass is hard and we can see through it. Windows are made of glass.'),
+        C('🧴','Plastic','Plastic is light. Many bottles are made of plastic.')],[
+        Q('🪵','Chairs and tables can be made of...',['Wood','Water'],'Wood'),
+        Q('🔩','Which material is strong?',['Metal','Paper'],'Metal'),
+        Q('🥛','We can see through...',['Glass','Wood'],'Glass'),
+        Q('🧴','Many bottles are made of...',['Plastic','Wood'],'Plastic')],'Things around us'),
+      L('sci8','Simple technology','📻',[
+        C('📻','Radio','A radio lets us hear news and music.'),
+        C('📱','Phone','A phone helps us talk to people far away.'),
+        C('🔦','Torch','A torch gives us light in the dark.'),
+        C('🚲','Bicycle','A bicycle helps us travel from place to place.')],[
+        Q('🔦','What helps us see in the dark?',['Torch','Radio','Bicycle'],'Torch'),
+        Q('📻','Which one lets us hear the news?',['Radio','Torch'],'Radio'),
+        Q('📱','Which one helps us talk to people far away?',['Phone','Bicycle'],'Phone'),
+        Q('🚲','True or False: A bicycle helps us travel.',TF,'True')],'Things around us'),
+      L('sci9','Caring for our environment','🌳',[
+        C('🗑️','Use a bin','Put rubbish in a bin. Keep our school and homes clean.'),
+        C('🌳','Plant trees','Trees give us shade, fruit and fresh air.'),
+        C('♻️','Reuse','Reuse bottles and containers when you can.'),
+        C('🚫','No littering','Do not throw litter on the ground.')],[
+        Q('🗑️','Where do we put rubbish?',['In a bin','On the ground'],'In a bin'),
+        Q('🌳','What do trees give us?',['Shade and fruit','Nothing'],'Shade and fruit'),
+        Q('🚫','True or False: It is good to throw litter on the ground.',TF,'False'),
+        Q('♻️','What can we do with old bottles?',['Reuse them','Break them'],'Reuse them')],'Nature')
+    ]},
+
+    social: { name:'Social Science', emoji:'🏘️', lessons:[
+      L('social','My family','👨‍👩‍👧‍👦',[
+        C('👩','Mother','This is a mother. Some children call her Amai or Umama.'),
+        C('👨','Father','This is a father. Some children call him Baba or Ubaba.'),
+        C('👵','Grandmother','A grandmother is the mother of a mother or father.'),
+        C('👴','Grandfather','A grandfather is the father of a mother or father.'),
+        C('👧','Brothers and sisters','Brothers and sisters are children in the same family.')],[
+        Q('👩','Which picture shows the mother?',['👨','👩','👧'],'👩'),
+        Q('👴','Which picture shows the grandfather?',['👴','👵','👦'],'👴'),
+        Q('👨‍👩‍👧‍👦','True or False: A family loves and cares for us.',TF,'True'),
+        Q('👵','Who is the mother of my mother?',['Grandmother','Sister'],'Grandmother')],'Me and others'),
+      L('so2','Places in my community','🏫',[
+        C('🏫','School','We learn at school.'),
+        C('🏥','Clinic','A clinic or hospital helps us when we are sick.'),
+        C('🏪','Shop','We buy food and other things at a shop.'),
+        C('🌾','Farm','Farmers grow food on farms.'),
+        C('🚌','Bus','Buses take people from place to place.')],[
+        Q('🏫','Where do we learn?',['School','Shop','Farm'],'School'),
+        Q('🏥','Where do we go when we are sick?',['Clinic','Farm'],'Clinic'),
+        Q('🌾','Where do farmers grow food?',['On a farm','On a bus'],'On a farm'),
+        Q('🏪','Where do we buy food?',['Shop','School'],'Shop')],'My community'),
+      L('so3','Community helpers','👩‍⚕️',[
+        C('👩‍🏫','Teacher','A teacher helps us learn.'),
+        C('👩‍⚕️','Nurse','A nurse helps people who are sick.'),
+        C('👨‍🌾','Farmer','A farmer grows food for us.'),
+        C('👮','Police officer','A police officer helps keep people safe.')],[
+        Q('👩‍🏫','Who helps us learn?',['Teacher','Nurse','Farmer'],'Teacher'),
+        Q('👩‍⚕️','Who helps sick people?',['Nurse','Farmer'],'Nurse'),
+        Q('👨‍🌾','Who grows food for us?',['Farmer','Teacher'],'Farmer'),
+        Q('👮','Who helps keep people safe?',['Police officer','Baker'],'Police officer')],'My community'),
+      L('so4','Staying safe','🚦',[
+        C('🚦','Road safety','Stop. Look left. Look right. Listen. Cross the road with a grown-up when it is safe.'),
+        C('🔥','Fire is dangerous','Do not play with fire or matches.'),
+        C('⚡','Electricity','Do not touch plugs or wires.'),
+        C('🧑‍🤝‍🧑','Trusted grown-ups','Stay with your family or teacher. Do not go anywhere with someone you do not know. Tell a trusted grown-up if something makes you feel scared or unsafe.')],[
+        Q('🚦','What do we do before crossing the road?',['Stop and look','Run fast','Close our eyes'],'Stop and look'),
+        Q('🔥','True or False: It is safe to play with matches.',TF,'False'),
+        Q('😟','If something makes you feel scared, tell...',['A trusted grown-up','No one'],'A trusted grown-up'),
+        Q('🧑‍🤝‍🧑','Should you go with someone you do not know?',['No','Yes'],'No')],'Staying safe'),
+      L('so5','My country: Zimbabwe','🇿🇼',[
+        C('🇿🇼','Zimbabwe','Zimbabwe is our country. Our capital city is Harare.'),
