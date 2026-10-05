@@ -2286,3 +2286,52 @@
   );
   buildActivities();
 </script>
+<script>
+  // ============================================================
+  // ADDITIONAL MATHEMATICS LESSONS (ECD A/B topic list)
+  // Adds: Colours, Sorting and Matching, Time, Position and Direction
+  // (Shapes, Patterns and Measurement already covered above)
+  // ============================================================
+  SUBJECTS.maths.lessons.push(
+    L('math9','Matching colours','🔴',[
+      C('🔴','Red','This ball is red. Find other red things.'),
+      C('🔵','Blue','This ball is blue. The sky is blue too.'),
+      C('🟢','Green','This ball is green. Leaves are green too.'),
+      C('🟡','Yellow','This ball is yellow. The sun looks yellow too.')],[
+      Q('🔴🔵🟢','Which ball matches the sky colour?',['🔵','🔴','🟢'],'🔵'),
+      Q('🟡🔵🔴','Which ball is the same colour as the sun?',['🟡','🔵','🔴'],'🟡'),
+      Q('🟢🔴🟡','Which ball is the same colour as a leaf?',['🟢','🔴','🟡'],'🟢'),
+      Q('🔴','What colour is this ball?',['Red','Blue','Green'],'Red')],'Shapes and measures'),
+
+    L('math10','Sorting and matching','🧺',[
+      C('🍎🍌','Sort by type','We can put all the fruit together in one group.'),
+      C('🐘🐭','Sort by size','We can put big things in one group and small things in another.'),
+      C('👕👖','Matching pairs','Socks come in matching pairs. Find the one that is the same.'),
+      C('🧦🧦','Same or different','Two things that look alike are the same.')],[
+      Q('🍎🚗🍌','Which two things belong in the same group?',['🍎 and 🍌','🍎 and 🚗'],'🍎 and 🍌'),
+      Q('🐘🐭','Which animal is big?',['🐘','🐭'],'🐘'),
+      Q('🧦','Socks usually come in...',['Matching pairs','Threes','Fives'],'Matching pairs'),
+      Q('⭐⭐','Are these two stars the same or different?',['Same','Different'],'Same')],'Shapes and measures'),
+
+    L('math11','Time: day and night','🌞',[
+      C('🌅','Morning','In the morning, the sun rises. We wake up and go to school.'),
+      C('☀️','Afternoon','In the afternoon, the sun is high. We eat lunch and play.'),
+      C('🌇','Evening','In the evening, the sun sets. We go home and eat dinner.'),
+      C('🌙','Night','At night, the moon and stars come out. We sleep.')],[
+      Q('🌅','When do we go to school?',['Morning','Night'],'Morning'),
+      Q('🌙','When do we sleep?',['Night','Afternoon'],'Night'),
+      Q('☀️','When is the sun high in the sky?',['Afternoon','Night'],'Afternoon'),
+      Q('🌇','When does the sun set?',['Evening','Morning'],'Evening')],'Numbers'),
+
+    L('math12','Position and direction','⬆️',[
+      C('⬆️','Up and down','A bird flies up. A stone falls down.'),
+      C('↔️','In and out','A fish swims in the water. A bird flies out of its nest.'),
+      C('↕️','Near and far','My house is near. The mountain is far.'),
+      C('👈','Left and right','I wave with my right hand. I hold my bag with my left hand.')],[
+      Q('⬆️','Which way does a bird fly?',['Up','Down'],'Up'),
+      Q('↕️','Which is nearer to you right now: your hand, or the moon?',['My hand','The moon'],'My hand'),
+      Q('⬆️','Which way does a stone fall?',['Down','Up'],'Down'),
+      Q('👈','We usually wave with our...',['Hand','Foot'],'Hand')],'Shapes and measures')
+  );
+  buildActivities();
+</script>
