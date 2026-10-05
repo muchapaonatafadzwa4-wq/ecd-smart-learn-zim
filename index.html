@@ -2335,3 +2335,33 @@
   );
   buildActivities();
 </script>
+<script>
+  // ============================================================
+  // ADDITIONAL SCIENCE AND TECHNOLOGY LESSONS (ECD A/B topic list)
+  // Adds: Food (where it comes from, eating well)
+  // (Myself/Body, Family, Animals, Plants, Water, Weather, Environment
+  // and Simple Technology are already covered above)
+  // ============================================================
+  SUBJECTS.science.lessons.push(
+    L('sci10','Where food comes from','🌽',[
+      C('🌽','From plants','Maize, vegetables and fruit come from plants.'),
+      C('🥛','From animals','Milk and eggs come from animals.'),
+      C('👨‍🌾','Farmers','Farmers grow crops and keep animals to give us food.'),
+      C('🏪','Shops and markets','We buy food at shops and markets.')],[
+      Q('🌽','Where does maize come from?',['Plants','Animals'],'Plants'),
+      Q('🥛','Where does milk come from?',['Animals','Plants'],'Animals'),
+      Q('👨‍🌾','Who grows crops for us?',['Farmers','Teachers'],'Farmers'),
+      Q('🏪','Where can we buy food?',['Shops and markets','The sky'],'Shops and markets')],'Nature'),
+
+    L('sci11','Eating well','🍽️',[
+      C('🍎','Fruit and vegetables','Fruit and vegetables keep our bodies healthy.'),
+      C('🍗','Protein foods','Meat, beans and eggs help our bodies grow strong.'),
+      C('🍚','Energy foods','Sadza, rice and bread give us energy to play and learn.'),
+      C('💧','Water','We drink water to stay healthy every day.')],[
+      Q('🍎','Which food keeps us healthy?',['Fruit and vegetables','Only sweets'],'Fruit and vegetables'),
+      Q('🍗','Which foods help our bodies grow strong?',['Meat, beans and eggs','Only sugar'],'Meat, beans and eggs'),
+      Q('🍚','What gives us energy to play?',['Energy foods like sadza','Stones'],'Energy foods like sadza'),
+      Q('💧','What should we drink every day to stay healthy?',['Water','Only juice'],'Water')],'Me and my health')
+  );
+  buildActivities();
+</script>
