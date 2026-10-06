@@ -2365,3 +2365,54 @@
   );
   buildActivities();
 </script>
+<script>
+  // ============================================================
+  // ADDITIONAL SOCIAL SCIENCE LESSONS (ECD A/B topic list)
+  // Adds: Myself, My Home, My School, Transport
+  // (My Family, My Community, Community Helpers, Safety and
+  // Culture and Traditions are already covered above)
+  // ============================================================
+  SUBJECTS.social.lessons.push(
+    L('so9','Myself','🧒',[
+      C('🧒','My name','Everyone has a name. My name makes me special.'),
+      C('😊','My feelings','I can feel happy, sad, excited or scared. All feelings are okay.'),
+      C('🙌','My body','I have a body that can run, jump, clap and dance.'),
+      C('🌟','I am special','I am special. There is no one else exactly like me.')],[
+      Q('🧒','Does everyone have a name?',['Yes','No'],'Yes'),
+      Q('😊','Is it okay to feel sad sometimes?',['Yes','No'],'Yes'),
+      Q('🙌','What can our bodies do?',['Run, jump and clap','Nothing'],'Run, jump and clap'),
+      Q('🌟','Is there anyone exactly like you?',['No, I am special','Yes, many people'],'No, I am special')],'Me and others'),
+
+    L('so10','My home','🏠',[
+      C('🏠','My home','My home is where my family lives together.'),
+      C('🛏️','Bedroom','We sleep in the bedroom.'),
+      C('🍳','Kitchen','We cook food in the kitchen.'),
+      C('🧹','Helping at home','We can help at home by tidying up and keeping it clean.')],[
+      Q('🛏️','Where do we sleep?',['Bedroom','Kitchen'],'Bedroom'),
+      Q('🍳','Where do we cook food?',['Kitchen','Bedroom'],'Kitchen'),
+      Q('🧹','How can we help at home?',['Tidy up and keep it clean','Make a mess'],'Tidy up and keep it clean'),
+      Q('🏠','Who lives in my home with me?',['My family','Strangers'],'My family')],'My community'),
+
+    L('so11','My school','🏫',[
+      C('🏫','My school','My school is a place where I learn and make friends.'),
+      C('👩‍🏫','My teacher','My teacher helps me learn new things every day.'),
+      C('📏','School rules','We follow rules like listening and sharing, so everyone is safe and happy.'),
+      C('🤝','Friends','At school, I play and learn together with my friends.')],[
+      Q('🏫','What do we do at school?',['Learn and make friends','Sleep all day'],'Learn and make friends'),
+      Q('👩‍🏫','Who helps us learn at school?',['Our teacher','A stranger'],'Our teacher'),
+      Q('📏','Why do we follow school rules?',['So everyone is safe and happy','For no reason'],'So everyone is safe and happy'),
+      Q('🤝','Who do we play with at school?',['Our friends','No one'],'Our friends')],'My community'),
+
+    L('so12','Transport','🚌',[
+      C('🚗','Car','A car carries a few people on the road.'),
+      C('🚌','Bus','A bus carries many people on the road.'),
+      C('🚲','Bicycle','A bicycle is pedalled by one person.'),
+      C('✈️','Aeroplane','An aeroplane flies in the sky to faraway places.'),
+      C('🚦','Road safety','Always cross the road carefully and hold a grown-up\'s hand.')],[
+      Q('🚌','Which one carries many people?',['Bus','Bicycle'],'Bus'),
+      Q('✈️','Which one flies in the sky?',['Aeroplane','Car'],'Aeroplane'),
+      Q('🚲','Which one is pedalled?',['Bicycle','Bus'],'Bicycle'),
+      Q('🚦','What should we do before crossing the road?',['Look carefully and hold a hand','Run quickly'],'Look carefully and hold a hand')],'My community')
+  );
+  buildActivities();
+</script>
