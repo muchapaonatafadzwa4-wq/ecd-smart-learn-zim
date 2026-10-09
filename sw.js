@@ -4,7 +4,7 @@
 // To release an update, change VERSION below (for example to 'v2').
 var VERSION = 'v3';
 var CACHE = 'ecdzim-' + VERSION;
-var APP_FILES = ['./', './index.html', './manifest.webmanifest',
+var APP_FILES = ['./', './index.html', './manifest.'./manifest.json',
                  './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', function(e){
